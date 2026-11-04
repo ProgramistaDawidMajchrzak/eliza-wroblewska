@@ -1,0 +1,27 @@
+---
+/**
+ * Wyświetla tekst i podświetla brakujące informacje oznaczone „TODO: …”.
+ *  - „(TODO: liczba postów)” → podświetlony fragment w nawiasie
+ *  - „TODO: …” bez nawiasu → podświetlone wszystko do końca tekstu
+ */
+import { noOrphans } from '../i18n';
+
+interface Props {
+  text: string | undefined | null;
+}
+const text = noOrphans(String(Astro.props.text ?? ''));
+const pattern = /\(TODO:[^)]*\)|TODO:.*$/s;
+
+const parts: { todo: boolean; value: string }[] = [];
+let rest = text;
+let match: RegExpExecArray | null;
+while ((match = pattern.exec(rest))) {
+  if (match.index > 0) parts.push({ todo: false, value: rest.slice(0, match.index) });
+  const raw = match[0];
+  parts.push({ todo: true, value: (raw.startsWith('(') ? raw.slice(1, -1) : raw).trim() });
+  rest = rest.slice(match.index + match[0].length);
+}
+if (rest) parts.push({ todo: false, value: rest });
+---
+
+{parts.map((part) => (part.todo ? <mark class="todo">{part.value}</mark> : part.value))}

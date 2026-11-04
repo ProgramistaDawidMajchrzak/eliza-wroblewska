@@ -1,0 +1,51 @@
+# ─────────────────────────────────────────────────────────────
+#  USTAWIENIA STRONY
+#  Puste pole ("") = na stronie pojawi się widoczny znacznik TODO.
+# ─────────────────────────────────────────────────────────────
+
+# Docelowy adres strony, bez ukośnika na końcu.
+# Potrzebny do sitemap, linków kanonicznych i podglądów w social mediach.
+url: "https://example.com" # TODO: docelowa domena
+
+name: "Eliza Wróblewska"
+
+contact:
+  # E-mail do współpracy – pokazywany w sekcji Kontakt.
+  email: "" # TODO
+  # Kontakt dla mediów – pokazywany na stronie /media.
+  pressName: "" # TODO: imię i nazwisko / rola (np. menedżer/ka)
+  pressEmail: "" # TODO
+  pressPhone: "" # TODO (opcjonalnie)
+
+# Formularz kontaktowy. Instrukcja podłączenia: README → „Formularz kontaktowy”.
+form:
+  # Adres usługi, która odbiera formularz (metoda POST), np.
+  #   Formspree:  https://formspree.io/f/xxxxxxx
+  #   Web3Forms:  https://api.web3forms.com/submit
+  endpoint: "" # TODO: endpoint formularza
+  # Nazwa ukrytego pola z adresem strony „dziękujemy” (zależy od usługi):
+  #   Web3Forms: "redirect", Formspree: "_next". Zostaw puste, jeśli usługa tego nie obsługuje.
+  redirectField: ""
+  # Ukryte pole-pułapka na boty (Formspree: "_gotcha", Web3Forms: "botcheck").
+  honeypotField: "_gotcha"
+  # Dodatkowe ukryte pola, np. klucz Web3Forms:
+  #   access_key: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  hidden: {}
+
+# PDF z media kitem. Wrzuć plik do folderu public/media-kit/ i wpisz ścieżkę, np.
+#   mediaKitPdf: "/media-kit/eliza-wroblewska-media-kit.pdf"
+# Dopóki pole jest puste, przycisk „Pobierz media kit” prowadzi na stronę /media.
+mediaKitPdf: "" # TODO
+
+club:
+  name: "PGE Akademia Judo Poznań"
+  url: "" # TODO: strona klubu
+
+# Profile w social mediach. Puste url = placeholder TODO w stopce.
+social:
+  - name: "Instagram"
+    url: "" # TODO
+  - name: "Facebook"
+    url: "" # TODO
+  - name: "LinkedIn"
+    url: "" # TODO

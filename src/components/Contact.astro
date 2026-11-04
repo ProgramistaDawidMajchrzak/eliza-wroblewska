@@ -1,0 +1,51 @@
+---
+import { site } from '../lib/data';
+import { useT, routes, type Lang } from '../i18n';
+import Kicker from './Kicker.astro';
+import ContactForm from './ContactForm.astro';
+import Txt from './Txt.astro';
+
+interface Props {
+  lang: Lang;
+  num?: string;
+  title?: string;
+}
+const { lang, num, title } = Astro.props;
+const t = useT(lang);
+---
+
+<section id={t.anchors.contact} class="on-dark bg-navy-950 py-20 text-white lg:py-28" aria-labelledby="contact-title">
+  <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-5">
+      <Kicker num={num} text={t.contact.kicker} dark />
+      <h2 id="contact-title" class="display mt-5 text-5xl sm:text-6xl" style="overflow-wrap: anywhere">{title ?? t.contact.title}</h2>
+      <p class="mt-6 text-lg leading-relaxed text-white/80">{t.contact.lead}</p>
+
+      <div class="board mt-10 p-6 pt-7">
+        <p class="board-label text-white/75">{t.contact.direct}</p>
+        <p class="mt-2 text-xl font-semibold">
+          {
+            site.contact.email ? (
+              <a href={`mailto:${site.contact.email}`} class="break-all underline underline-offset-4 hover:text-flag-light">
+                {site.contact.email}
+              </a>
+            ) : (
+              <Txt text={t.contact.emailTodo} />
+            )
+          }
+        </p>
+      </div>
+
+      <p class="mt-8 text-sm leading-relaxed text-white/75">
+        {t.contact.press}{' '}
+        <a href={routes.media[lang]} class="font-semibold text-white underline underline-offset-4 hover:text-flag-light">
+          {t.contact.pressLink}
+        </a>.
+      </p>
+    </div>
+
+    <div class="lg:col-span-7">
+      <ContactForm lang={lang} />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,23 @@
+# build
+dist/
+.astro/
+
+# zależności
+node_modules/
+
+# logi
+npm-debug.log*
+
+# zmienne środowiskowe
+.env
+.env.*
+
+# system / edytor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# oryginalne pliki z WhatsAppa – kopie używane na stronie leżą w src/assets/photos i public/video
+zdjecia/

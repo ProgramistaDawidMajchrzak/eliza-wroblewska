@@ -1,0 +1,153 @@
+---
+/**
+ * Polityka prywatności – SZABLON do weryfikacji prawnej przed publikacją.
+ * Fragmenty „TODO: …” trzeba uzupełnić danymi administratora i dostawców usług.
+ */
+import Base from '../../layouts/Base.astro';
+import Txt from '../Txt.astro';
+import { useT, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const content = {
+  pl: {
+    title: 'Polityka prywatności',
+    note: 'TODO: szablon do weryfikacji przez prawnika przed publikacją strony',
+    updated: 'Ostatnia aktualizacja: TODO: data publikacji',
+    sections: [
+      {
+        h: 'Administrator danych',
+        p: [
+          'Administratorem danych osobowych przesyłanych przez formularz kontaktowy jest TODO: imię i nazwisko lub nazwa administratora, adres, e-mail do spraw danych osobowych.',
+        ],
+      },
+      {
+        h: 'Jakie dane zbieramy',
+        p: [
+          'Przez formularz kontaktowy zbieramy: imię i nazwisko, nazwę firmy (opcjonalnie), adres e-mail, wybrany rodzaj współpracy oraz treść wiadomości.',
+          'Dostawca hostingu może automatycznie zapisywać w logach serwera podstawowe dane techniczne, np. adres IP i informacje o przeglądarce.',
+        ],
+      },
+      {
+        h: 'Cel i podstawa przetwarzania',
+        p: [
+          'Dane przetwarzamy, aby odpowiedzieć na wiadomość i prowadzić dalszą korespondencję w sprawie współpracy – na podstawie zgody (art. 6 ust. 1 lit. a RODO) oraz prawnie uzasadnionego interesu administratora polegającego na kontakcie z osobami zainteresowanymi współpracą (art. 6 ust. 1 lit. f RODO).',
+          'Jeśli rozmowy doprowadzą do zawarcia umowy, dane mogą być przetwarzane w celu jej przygotowania i wykonania (art. 6 ust. 1 lit. b RODO).',
+        ],
+      },
+      {
+        h: 'Odbiorcy danych',
+        p: [
+          'Dane mogą być przekazywane podmiotom, które świadczą dla nas usługi techniczne: TODO: dostawca usługi formularza (np. Formspree lub Web3Forms), TODO: dostawca hostingu (np. Vercel lub Netlify), TODO: dostawca poczty e-mail.',
+          'TODO: jeśli którykolwiek z dostawców przetwarza dane poza Europejskim Obszarem Gospodarczym, opisać podstawę przekazania (np. standardowe klauzule umowne).',
+        ],
+      },
+      {
+        h: 'Jak długo przechowujemy dane',
+        p: ['TODO: okres przechowywania (np. do zakończenia korespondencji, a następnie przez okres przedawnienia ewentualnych roszczeń).'],
+      },
+      {
+        h: 'Twoje prawa',
+        p: [
+          'Masz prawo dostępu do swoich danych, ich sprostowania, usunięcia lub ograniczenia przetwarzania, przenoszenia danych oraz wniesienia sprzeciwu. Zgodę możesz wycofać w dowolnym momencie – nie wpływa to na zgodność z prawem przetwarzania przed jej wycofaniem.',
+          'Masz też prawo wnieść skargę do Prezesa Urzędu Ochrony Danych Osobowych (ul. Stawki 2, 00-193 Warszawa).',
+          'Podanie danych jest dobrowolne, ale bez nich nie będziemy mogli odpowiedzieć na wiadomość.',
+        ],
+      },
+      {
+        h: 'Pliki cookies i analityka',
+        p: [
+          'Strona nie używa plików cookies ani narzędzi analitycznych. Czcionki są wczytywane z naszego serwera, więc Twoje dane nie trafiają do Google Fonts.',
+          'Jeśli w przyszłości dodamy analitykę, osadzone filmy lub inne usługi zewnętrzne, zaktualizujemy tę politykę.',
+        ],
+      },
+    ],
+  },
+  en: {
+    title: 'Privacy policy',
+    note: 'TODO: template to be reviewed by a lawyer before the site goes live',
+    updated: 'Last updated: TODO: publication date',
+    sections: [
+      {
+        h: 'Data controller',
+        p: [
+          'The controller of personal data sent through the contact form is TODO: name of the controller, address, email for data protection matters.',
+        ],
+      },
+      {
+        h: 'What data we collect',
+        p: [
+          'Through the contact form we collect: your name, company name (optional), email address, the selected type of partnership and the content of your message.',
+          'The hosting provider may automatically record basic technical data in server logs, such as IP address and browser information.',
+        ],
+      },
+      {
+        h: 'Purpose and legal basis',
+        p: [
+          'We process the data to reply to your message and continue correspondence about a partnership – on the basis of your consent (Art. 6(1)(a) GDPR) and the controller’s legitimate interest in communicating with people interested in a partnership (Art. 6(1)(f) GDPR).',
+          'If the discussions lead to an agreement, the data may be processed to prepare and perform it (Art. 6(1)(b) GDPR).',
+        ],
+      },
+      {
+        h: 'Recipients',
+        p: [
+          'Data may be shared with providers of technical services: TODO: form service provider (e.g. Formspree or Web3Forms), TODO: hosting provider (e.g. Vercel or Netlify), TODO: email provider.',
+          'TODO: if any provider processes data outside the European Economic Area, describe the transfer mechanism (e.g. standard contractual clauses).',
+        ],
+      },
+      {
+        h: 'Retention',
+        p: ['TODO: retention period (e.g. until the correspondence ends and then for the limitation period of any claims).'],
+      },
+      {
+        h: 'Your rights',
+        p: [
+          'You have the right to access, rectify, erase or restrict the processing of your data, to data portability and to object. You can withdraw your consent at any time without affecting the lawfulness of processing before withdrawal.',
+          'You also have the right to lodge a complaint with the Polish supervisory authority, the President of the Personal Data Protection Office (UODO), ul. Stawki 2, 00-193 Warsaw.',
+          'Providing data is voluntary, but without it we cannot reply to your message.',
+        ],
+      },
+      {
+        h: 'Cookies and analytics',
+        p: [
+          'This website does not use cookies or analytics tools. Fonts are served from our own server, so your data is not sent to Google Fonts.',
+          'If we add analytics, embedded videos or other third-party services in the future, we will update this policy.',
+        ],
+      },
+    ],
+  },
+}[lang];
+---
+
+<Base lang={lang} route="privacy" title={t.meta.privacy.title} description={t.meta.privacy.description}>
+  <section class="on-dark bg-navy-950 pt-16 pb-12 text-white lg:pt-24">
+    <div class="wrap">
+      <p class="kicker text-white/80"><span class="h-1 w-8 bg-flag" aria-hidden="true"></span>RODO / GDPR</p>
+      <h1 class="display mt-5 text-5xl sm:text-6xl xl:text-7xl">{content.title}</h1>
+      <p class="mt-6 text-sm"><Txt text={content.note} /></p>
+    </div>
+  </section>
+  <article class="bg-white py-14 lg:py-20">
+    <div class="wrap max-w-3xl!">
+      {
+        content.sections.map((s, i) => (
+          <section class:list={[i > 0 && 'mt-10']}>
+            <h2 class="display text-3xl" style="font-stretch: 78%">{s.h}</h2>
+            <div class="prose-ew mt-3 leading-relaxed text-ink-soft">
+              {s.p.map((para) => (
+                <p>
+                  <Txt text={para} />
+                </p>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+      <p class="mt-12 border-t border-gi-300 pt-6 text-sm text-ink-soft"><Txt text={content.updated} /></p>
+    </div>
+  </article>
+</Base>

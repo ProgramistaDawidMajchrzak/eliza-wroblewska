@@ -1,0 +1,54 @@
+# ─────────────────────────────────────────────────────────────
+#  FAQ (strona /wspolpraca) – odpowiedzi do akceptacji przez Elizę.
+#  Fragment zaczynający się od „TODO:” jest podświetlany jako brakująca informacja.
+# ─────────────────────────────────────────────────────────────
+
+faq:
+  - q:
+      pl: "Czy logo pojawi się na judodze podczas zawodów?"
+      en: "Will our logo appear on the judogi at competitions?"
+    a:
+      pl: "Tego nie obiecujemy. Na zawodach IJF reklama na judodze podlega ścisłym przepisom federacji. Dlatego ekspozycję marki budujemy na odzieży treningowej, dresie i torbie, na stronie oraz w social mediach."
+      en: "We don't promise that. Advertising on the judogi at IJF events is strictly regulated by the federation, so we build your brand's exposure on training wear, the tracksuit and kit bag, on the website and on social media."
+
+  - q:
+      pl: "Czy Eliza może przyjechać do naszej firmy?"
+      en: "Can Eliza come to our company?"
+    a:
+      pl: "Tak. Wystąpienia są częścią pakietów Partner Główny i Partner: wykład dla zespołu, event firmowy albo trening judo dla pracowników lub ich dzieci. Terminy ustalamy tak, żeby nie kolidowały z kalendarzem startów."
+      en: "Yes. Appearances are part of the Main Partner and Partner packages: a talk for your team, a company event or a judo session for employees or their children. Dates are planned around the competition calendar."
+
+  - q:
+      pl: "Jak wygląda umowa?"
+      en: "What does the agreement look like?"
+    a:
+      pl: "Umowę przygotowujemy indywidualnie. Może być zawarta z zawodniczką albo przez klub – to drugie rozwiązanie może pozwolić skorzystać z ulgi sponsoringowej. TODO: potwierdzić dostępne formy umowy."
+      en: "Each agreement is prepared individually. It can be signed with the athlete or through the club – the latter may allow you to use the Polish sponsorship tax relief. TODO: confirm the available forms of agreement."
+
+  - q:
+      pl: "Na jak długo podpisujemy współpracę?"
+      en: "How long does a partnership last?"
+    a:
+      pl: "TODO: minimalny okres współpracy (np. sezon startowy)."
+      en: "TODO: minimum partnership term (e.g. one competition season)."
+
+  - q:
+      pl: "Czy mała firma może zostać partnerem?"
+      en: "Can a small business become a partner?"
+    a:
+      pl: "Tak. Pakiet Partner Lokalny jest pomyślany dla małych i średnich firm z Poznania i Wielkopolski."
+      en: "Yes. The Local Partner package is designed for small and medium-sized businesses from Poznań and Greater Poland."
+
+  - q:
+      pl: "Jak rozliczyć sponsoring podatkowo?"
+      en: "How is sponsorship treated for tax purposes?"
+    a:
+      pl: "Firmy finansujące niezarobkowy klub sportowy lub stypendium sportowe mogą skorzystać z ulgi sponsoringowej i rozliczyć łącznie 150% wydatku. Szczegóły opisujemy wyżej – formę umowy trzeba potwierdzić z księgowym."
+      en: "Companies funding a non-profit sports club or a sports scholarship can use the Polish sponsorship relief and account for 150% of the expense in total. See the details above – the form of agreement must be confirmed with your accountant."
+
+  - q:
+      pl: "Co zawiera raport po sezonie?"
+      en: "What is in the end-of-season report?"
+    a:
+      pl: "TODO: zakres raportu po sezonie."
+      en: "TODO: scope of the end-of-season report."

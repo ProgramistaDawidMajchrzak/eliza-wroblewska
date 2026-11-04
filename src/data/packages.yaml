@@ -1,0 +1,65 @@
+# ─────────────────────────────────────────────────────────────
+#  PAKIETY PARTNERSKIE (strona /wspolpraca)
+#  Szkic do akceptacji przez Elizę.
+#
+#  price:      puste "" = na stronie „Cena: TODO”. Wpisz np. "od 30 000 zł netto / sezon".
+#  highlight:  true = wyróżniona karta (tylko jeden pakiet)
+#  benefits:   lista korzyści. Fragment zaczynający się od „TODO:” jest na stronie
+#              podświetlany jako brakująca informacja.
+#  Nie obiecuj logo na judodze – na zawodach IJF reklama na stroju jest ściśle regulowana.
+# ─────────────────────────────────────────────────────────────
+
+packages:
+  - id: partner-glowny
+    name: { pl: "Partner Główny", en: "Main Partner" }
+    slots: { pl: "1 firma · wyłączność branżowa", en: "1 company · industry exclusivity" }
+    tagline:
+      pl: "Najmocniejsza ekspozycja i stała obecność przy Elizie przez cały sezon."
+      en: "The strongest exposure and a constant presence alongside Eliza all season."
+    price: "" # TODO
+    highlight: true
+    benefits:
+      - pl: "Logo na odzieży treningowej, dresie i torbie"
+        en: "Logo on training wear, tracksuit and kit bag"
+      - pl: "Wyróżnienie na stronie i w media kicie"
+        en: "Featured placement on the website and in the media kit"
+      - pl: "Regularna obecność w social mediach (TODO: liczba postów)"
+        en: "Regular presence on social media (TODO: number of posts)"
+      - pl: "2 wystąpienia w roku: wykład dla zespołu, event firmowy albo trening judo dla pracowników lub ich dzieci"
+        en: "2 appearances a year: a talk for your team, a company event or a judo session for employees or their children"
+      - pl: "Sesja zdjęciowa z marką"
+        en: "Photo shoot with your brand"
+      - pl: "Raport po sezonie"
+        en: "End-of-season report"
+
+  - id: partner
+    name: { pl: "Partner", en: "Partner" }
+    slots: { pl: "do 3 firm", en: "up to 3 companies" }
+    tagline:
+      pl: "Widoczność na odzieży i w sieci oraz spotkanie z Elizą w Twojej firmie."
+      en: "Visibility on kit and online, plus a visit from Eliza at your company."
+    price: "" # TODO
+    benefits:
+      - pl: "Logo na odzieży i na stronie"
+        en: "Logo on kit and on the website"
+      - pl: "Posty w social mediach raz na kwartał"
+        en: "Quarterly social media posts"
+      - pl: "1 wystąpienie w roku"
+        en: "1 appearance a year"
+      - pl: "Raport po sezonie"
+        en: "End-of-season report"
+
+  - id: partner-lokalny
+    name: { pl: "Partner Lokalny", en: "Local Partner" }
+    slots: { pl: "dla małych i średnich firm", en: "for small and medium-sized businesses" }
+    tagline:
+      pl: "Dla firm z Poznania i Wielkopolski, które chcą wspierać sport z regionu."
+      en: "For companies from Poznań and Greater Poland that want to back local sport."
+    price: "" # TODO
+    benefits:
+      - pl: "Logo w sekcji partnerów na stronie"
+        en: "Logo in the partners section of the website"
+      - pl: "Podziękowania w social mediach"
+        en: "Thank-you posts on social media"
+      - pl: "Zaproszenie na spotkanie z Elizą"
+        en: "Invitation to meet Eliza"

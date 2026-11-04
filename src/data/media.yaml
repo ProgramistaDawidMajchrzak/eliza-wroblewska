@@ -1,0 +1,134 @@
+# ─────────────────────────────────────────────────────────────
+#  STRONA /media – biogramy do skopiowania przez dziennikarzy
+#  Po aktualizacji biogramów zmień datę „updated”.
+#  Fakty w punktach (wzrost, klub, ranking…) strona składa sama z profile.yaml i stats.yaml.
+# ─────────────────────────────────────────────────────────────
+
+updated: "2026-11-04" # RRRR-MM-DD
+
+bios:
+  # ok. 50 słów
+  short:
+    pl: >-
+      Eliza Wróblewska (ur. 1999) to judoczka PGE Akademii Judo Poznań i reprezentantka Polski w kategorii -78 kg.
+      Czterokrotna mistrzyni Polski seniorek, zdobywczyni 25 medali międzynarodowych. W 2025 roku przeszła
+      z kategorii -70 do -78 kg i w niecały rok zdobyła medale European Open, tytuł mistrzyni Polski
+      i 5. miejsce w Grand Slamie w Budapeszcie.
+    en: >-
+      Eliza Wróblewska (born 1999) is a Polish national team judoka at -78 kg from PGE Akademia Judo Poznań.
+      A four-time Polish senior champion with 25 international medals, she moved up from -70 kg in 2025
+      and within a year won European Open medals, the Polish title and fifth place at the Budapest Grand Slam.
+
+  # ok. 150 słów
+  medium:
+    pl: >-
+      Eliza Wróblewska, urodzona 23 maja 1999 roku, jest judoczką PGE Akademii Judo Poznań i reprezentantką Polski.
+      Ma 182 cm wzrostu i pseudonim „Wróbelek”.
+
+
+      Jako kadetka walczyła w kategorii -63 kg, a w seniorskiej karierze przez lata startowała w -70 kg. W tej
+      kategorii trzykrotnie zdobyła mistrzostwo Polski (2017, 2020, 2021). Na arenie międzynarodowej wywalczyła
+      m.in. brąz Światowych Igrzysk Wojskowych (2019), brąz mistrzostw Europy U23 i srebro wojskowych mistrzostw
+      świata (2021). Startowała w mistrzostwach świata w Tokio, Dosze i Abu Zabi.
+
+
+      W 2025 roku przeszła do kategorii -78 kg. W niecały rok zdobyła medale European Open (brąz w Sarajewie,
+      srebro w Sofii), tytuł mistrzyni Polski w Krakowie i 5. miejsce w Grand Slamie w Budapeszcie. W 2026 roku
+      startowała w mistrzostwach świata w Baku, a w Grand Slamie w Abu Zabi zajęła 7. miejsce. Ma na koncie
+      25 medali międzynarodowych.
+    en: >-
+      Eliza Wróblewska, born on 23 May 1999, is a judoka from PGE Akademia Judo Poznań and a member of the
+      Polish national team. She is 182 cm tall and goes by the nickname “Wróbelek” (“little sparrow”).
+
+
+      As a cadet she fought at -63 kg, and for most of her senior career she competed at -70 kg, winning the
+      Polish title in that category three times (2017, 2020, 2021). Internationally, her results include bronze
+      at the Military World Games (2019), bronze at the European U23 Championships and silver at the World
+      Military Championships (2021). She has competed at the World Championships in Tokyo, Doha and Abu Dhabi.
+
+
+      In 2025 she moved up to -78 kg. Within a year she won European Open medals (bronze in Sarajevo, silver
+      in Sofia), the Polish title in Kraków and fifth place at the Budapest Grand Slam. In 2026 she competed
+      at the World Championships in Baku and finished seventh at the Abu Dhabi Grand Slam. She has won
+      25 international medals.
+
+  # ok. 400 słów
+  long:
+    pl: >-
+      Eliza Wróblewska urodziła się 23 maja 1999 roku. Jest zawodniczką PGE Akademii Judo Poznań i reprezentantką
+      Polski w judo. Ma 182 cm wzrostu i pseudonim „Wróbelek”, który przy jej warunkach fizycznych brzmi
+      wyjątkowo niepozornie.
+
+
+      Jako kadetka walczyła w kategorii -63 kg. W rywalizacji seniorek przez lata startowała w kategorii -70 kg
+      i zdobyła w niej trzy tytuły mistrzyni Polski: w 2017, 2020 i 2021 roku. W mistrzostwach Polski seniorek
+      ma również dwa srebrne (2023, 2025) i dwa brązowe medale (2019, 2022).
+
+
+      Na arenie międzynarodowej zdobyła brązowy medal Światowych Igrzysk Wojskowych w Wuhanie (2019), a w 2021
+      roku brąz mistrzostw Europy U23 w Budapeszcie i srebro wojskowych mistrzostw świata w Paryżu. W kolejnych
+      sezonach stawała na podium Pucharu Europy w Celje (2022), European Open w Warszawie i International Open
+      w Herstal (2023). Zajmowała 5. miejsca w Grand Prix w Zagrzebiu (2023), Grand Slamie w Astanie
+      i Grand Prix w Linzu (2024). Reprezentowała Polskę w mistrzostwach świata w Tokio (2019), Dosze (2023)
+      i Abu Zabi (2024).
+
+
+      W 2025 roku przeszła do kategorii -78 kg, drugiej najcięższej kategorii kobiet w judo, i szybko
+      odnalazła się w nowej wadze. Jeszcze w tym samym roku zdobyła brąz European Open w Sarajewie i brąz
+      Pucharu Europy w Skopje. Sezon 2026 otworzyła 31 stycznia srebrem European Open w Sofii. 30 maja
+      w Krakowie została mistrzynią Polski, tym razem w kategorii -78 kg. 13 września zajęła 5. miejsce
+      w Grand Slamie w Budapeszcie, w październiku wystartowała w mistrzostwach świata w Baku, a 31 października
+      była siódma w Grand Slamie w Abu Zabi. Łącznie ma na koncie 25 medali międzynarodowych, a w rankingu
+      światowym IJF zajmuje 41. miejsce w kategorii -78 kg (stan na 22 października 2026 roku).
+
+
+      Dla Elizy to już czwarty tytuł mistrzyni Polski seniorek – pierwszy zdobyła w 2017 roku, jeszcze
+      w kategorii -70 kg. Startowała wcześniej w kategoriach -63 kg (jako kadetka) i -70 kg, a dziś walczy
+      w -78 kg.
+
+
+      Jej droga nie zawsze prowadziła prosto w górę – wracała do rywalizacji po kontuzjach. Judo traktuje
+      jako szkołę szacunku i dyscypliny. Ukłon przed walką i po niej, codzienna praca na treningu i uczciwa
+      rywalizacja to fundamenty tego sportu, które dobrze sprawdzają się także poza matą.
+
+
+      Jest związana z Poznaniem i Wielkopolską, a na arenie międzynarodowej startuje w zawodach cyklu
+      IJF World Tour – turniejach Grand Slam i Grand Prix rozgrywanych na kilku kontynentach.
+    en: >-
+      Eliza Wróblewska was born on 23 May 1999. She competes for PGE Akademia Judo Poznań and is a member of
+      the Polish national judo team. She is 182 cm tall and goes by the nickname “Wróbelek” (“little sparrow”),
+      which sounds rather modest given her build.
+
+
+      As a cadet she fought in the -63 kg category. For most of her senior career she competed at -70 kg,
+      winning three Polish senior titles in that category: in 2017, 2020 and 2021. At the Polish Senior
+      Championships she has also won two silver medals (2023, 2025) and two bronze medals (2019, 2022).
+
+
+      Internationally, she won bronze at the Military World Games in Wuhan (2019), and in 2021 bronze at the
+      European U23 Championships in Budapest and silver at the World Military Championships in Paris. In the
+      following seasons she reached the podium at the European Cup in Celje (2022), the Warsaw European Open
+      and the Herstal International Open (2023). She finished fifth at the Zagreb Grand Prix (2023), the
+      Astana Grand Slam and the Linz Grand Prix (2024). She represented Poland at the World Championships
+      in Tokyo (2019), Doha (2023) and Abu Dhabi (2024).
+
+
+      In 2025 she moved up to -78 kg, the second-heaviest women's category in judo, and quickly found her
+      feet in the new weight class. That same year she won bronze at the Sarajevo European Open and bronze
+      at the European Cup in Skopje. She opened the 2026 season with silver at the Sofia European Open on
+      31 January. On 30 May in Kraków she became Polish champion, this time at -78 kg. On 13 September she
+      finished fifth at the Budapest Grand Slam, in October she competed at the World Championships in Baku,
+      and on 31 October she placed seventh at the Abu Dhabi Grand Slam. In total she has won 25 international
+      medals and is ranked 41st in the IJF World Ranking List at -78 kg (as of 22 October 2026).
+
+
+      It was her fourth Polish senior title – she won the first in 2017, still at -70 kg.
+
+
+      Her path has not always been a straight climb – she has had to come back from injuries. She sees
+      judo as a school of respect and discipline. Bowing before and after every bout, daily work in training
+      and fair competition are the foundations of the sport, and they work just as well off the mat.
+
+
+      She is rooted in Poznań and the Greater Poland region, and internationally she competes on the
+      IJF World Tour.

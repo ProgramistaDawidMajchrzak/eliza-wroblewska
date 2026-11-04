@@ -1,0 +1,29 @@
+# ─────────────────────────────────────────────────────────────
+#  PODSTAWOWE FAKTY O ELIZIE
+#  Używane w biogramie, faktach dla mediów i danych dla Google.
+# ─────────────────────────────────────────────────────────────
+
+firstName: "Eliza"
+lastName: "Wróblewska"
+nickname: "Wróbelek"
+birthDate: "1999-05-23" # RRRR-MM-DD
+heightCm: 182
+city: "Poznań"
+club: "PGE Akademia Judo Poznań"
+
+category: "-78 kg"
+categorySince: 2025
+previousCategory: "-70 kg" # pokazywana w sekcji „Na fali” (przekreślona)
+previousCategories:
+  pl: "-70 kg (seniorki, do 2025), -63 kg (kadetki)"
+  en: "-70 kg (seniors, until 2025), -63 kg (cadets)"
+
+# Trener – puste = TODO na stronie /media.
+coach: "" # TODO: trener (do potwierdzenia)
+
+# Oficjalne profile – trafiają też do danych strukturalnych (sameAs).
+profiles:
+  - name: "IJF"
+    url: "https://www.ijf.org/judoka/18128"
+  - name: "JudoInside"
+    url: "https://www.judoinside.com/judoka/17080/Eliza_Wroblewska"

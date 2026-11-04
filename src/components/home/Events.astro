@@ -1,0 +1,75 @@
+---
+import { events, stats } from '../../lib/data';
+import { dateParts, formatDate, isUpcoming } from '../../lib/format';
+import { useT, type Lang } from '../../i18n';
+import Kicker from '../Kicker.astro';
+import Txt from '../Txt.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const upcoming = events.upcoming
+  .filter((e) => isUpcoming(e.date, e.endDate))
+  .sort((a, b) => a.date.localeCompare(b.date));
+const r = stats.ranking;
+---
+
+<section id={t.anchors.events} class="bg-gi py-20 lg:py-28" aria-labelledby="events-title">
+  <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-8">
+      <Kicker num="04" text={t.events.kicker} />
+      <h2 id="events-title" class="display mt-5 text-5xl sm:text-6xl xl:text-7xl">{t.events.title}</h2>
+
+      <ol class="mt-10 space-y-3">
+        {
+          upcoming.map((e) => {
+            const d = dateParts(e.date, lang);
+            return (
+              <li class="board on-dark grid grid-cols-[5.75rem_1fr] sm:grid-cols-[8rem_1fr]">
+                <p class="flex flex-col items-center justify-center border-r border-white/10 px-2 py-6 text-center">
+                  <span class="digits text-6xl">{d.day}</span>
+                  <span class="board-label mt-1 text-white/80">
+                    {d.month} {d.year}
+                  </span>
+                </p>
+                <div class="p-5 sm:p-7">
+                  <p class="board-label text-white/70">{e.level[lang]}</p>
+                  <h3 class="display mt-1.5 text-3xl sm:text-4xl" style="font-stretch: 75%">
+                    {e.name[lang]}
+                  </h3>
+                  <p class="mt-1.5 text-white/80">
+                    {e.city[lang]}, {e.country[lang]}
+                    {e.endDate && <> · {formatDate(e.date, lang)} – {formatDate(e.endDate, lang)}</>}
+                  </p>
+                </div>
+              </li>
+            );
+          })
+        }
+        {upcoming.length === 0 && <li class="border-2 border-dashed border-gi-300 p-6 text-ink-soft">{t.events.empty}</li>}
+      </ol>
+      {
+        events.todo && (
+          <p class="mt-5 text-sm">
+            <Txt text={events.todo[lang]} />
+          </p>
+        )
+      }
+    </div>
+
+    <aside class="lg:col-span-4 lg:pt-28" aria-labelledby="ranking-title">
+      <div class="border-2 border-navy-900 bg-white p-6 sm:p-8">
+        <h3 id="ranking-title" class="board-label text-ink-soft">{t.events.rankingTitle} · {r.category}</h3>
+        <p class="digits mt-4 text-8xl">{r.position}<span class="text-flag">.</span></p>
+        <p class="mt-3 text-ink-soft">
+          {r.points} {t.common.points} · {t.common.asOf} {formatDate(r.asOf, lang)}
+        </p>
+        <a href={r.url} class="link-arrow mt-6 text-ink" rel="noopener">
+          {t.events.rankingCta} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </aside>
+  </div>
+</section>

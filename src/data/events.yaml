@@ -1,0 +1,22 @@
+# ─────────────────────────────────────────────────────────────
+#  NAJBLIŻSZE STARTY
+#
+#  Zawody, których data już minęła, znikają ze strony same przy kolejnym
+#  przebudowaniu strony. Po zawodach dopisz wynik w results.yaml.
+#
+#  date:     "RRRR-MM-DD" (pierwszy dzień zawodów)
+#  endDate:  "RRRR-MM-DD" (opcjonalnie, ostatni dzień)
+#  level:    ranga zawodów
+# ─────────────────────────────────────────────────────────────
+
+upcoming:
+  - date: "2026-11-13"
+    name: { pl: "Grand Prix Zagrzeb", en: "Zagreb Grand Prix" }
+    city: { pl: "Zagrzeb", en: "Zagreb" }
+    country: { pl: "Chorwacja", en: "Croatia" }
+    level: { pl: "IJF World Tour · Grand Prix", en: "IJF World Tour · Grand Prix" }
+
+# Widoczna notka pod kalendarzem. Usuń całe pole, gdy kalendarz będzie kompletny.
+todo:
+  pl: "TODO: uzupełnić kalendarz startów na sezon 2027"
+  en: "TODO: add the 2027 competition calendar"

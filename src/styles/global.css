@@ -1,0 +1,376 @@
+@import 'tailwindcss';
+
+/* ── Fonty (Google Fonts, hostowane lokalnie, przycięte do znaków łacińskich i polskich) ── */
+/* Archivo w trzech statycznych wariantach (szybsze renderowanie niż font zmienny):
+   62% / 800 – cyfry tablicy wyników i nazwisko w hero
+   72% / 800 – nagłówki
+   85% / 700 – etykiety, przyciski */
+@font-face {
+  font-family: 'Archivo EW';
+  src: url('/fonts/archivo-digits.woff2') format('woff2');
+  font-weight: 800;
+  font-stretch: 62%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Archivo EW';
+  src: url('/fonts/archivo-display.woff2') format('woff2');
+  font-weight: 800;
+  font-stretch: 72%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Archivo EW';
+  src: url('/fonts/archivo-label.woff2') format('woff2');
+  font-weight: 700;
+  font-stretch: 85%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter EW';
+  src: url('/fonts/inter-pl.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Zastępcze fonty z dopasowanymi metrykami – mniej „skakania” tekstu przy ładowaniu. */
+@font-face {
+  font-family: 'Inter fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Archivo fallback';
+  src: local('Arial Narrow'), local('Roboto Condensed'), local('Arial');
+  size-adjust: 96%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+@theme {
+  --font-sans: 'Inter EW', 'Inter fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Archivo EW', 'Archivo fallback', 'Arial Narrow', system-ui, sans-serif;
+
+  /* Paleta: biała i niebieska judoga (IJF) + czerwień z flagi */
+  --color-navy-950: #06142a;
+  --color-navy-900: #0b1f3a;
+  --color-navy-800: #12294b;
+  --color-navy-700: #1b3a66;
+  --color-navy-600: #2a4c80;
+  --color-gi: #f7f5f0; /* ciepła biel judogi */
+  --color-gi-200: #ebe7de;
+  --color-gi-300: #d9d3c6;
+  --color-ink: #0b1f3a;
+  --color-ink-soft: #3d4a5c; /* 8:1 na bieli judogi */
+  --color-flag: #c8102e; /* 5,9:1 na bieli */
+  --color-flag-dark: #a30c25;
+  --color-flag-light: #ff6b7d; /* czerwień na granacie – 5,5:1 */
+  --color-gold: #d4a72c;
+  --color-silver: #b4bcc6;
+  --color-bronze: #c27a43;
+  --color-todo-bg: #fff1b8;
+  --color-todo-ink: #5a4300;
+  --color-todo-line: #b8860b;
+
+  --breakpoint-xs: 25rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  body {
+    background: var(--color-gi);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-flag);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: var(--color-flag-light);
+  }
+  .on-dark .on-light :focus-visible {
+    outline-color: var(--color-flag);
+  }
+  ::selection {
+    background: var(--color-flag);
+    color: #fff;
+  }
+  summary {
+    cursor: pointer;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer components {
+  /* Kontener z marginesem 16 px na telefonie */
+  .wrap {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 40rem) {
+    .wrap {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (min-width: 64rem) {
+    .wrap {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Nagłówki: zwężony, gruby Archivo */
+  .display {
+    font-family: var(--font-display);
+    font-stretch: 72%;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  /* Etykieta sekcji w stylu tablicy wyników: „01 — NA FALI” */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .kicker-num {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2.25rem;
+    height: 1.75rem;
+    padding-inline: 0.4rem;
+    background: var(--color-flag);
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── MOTYW: TABLICA WYNIKÓW ─────────────────────────── */
+  .board {
+    position: relative;
+    background: var(--color-navy-900);
+    color: #fff;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+  }
+  /* czerwony „pasek czasu walki” u góry tablicy */
+  .board::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-flag) 0 72%, rgb(255 255 255 / 0.14) 72% 100%);
+  }
+  .board-cells {
+    display: grid;
+    gap: 1px;
+    background: rgb(255 255 255 / 0.1); /* linie między polami */
+  }
+  .board-cell {
+    background: var(--color-navy-900);
+    padding: 1rem 0.75rem 1.125rem;
+  }
+  .board-cell .board-label {
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 39.99rem) {
+    .board-cell .board-label {
+      font-stretch: 72%;
+      letter-spacing: 0.04em;
+    }
+  }
+  .digits {
+    font-family: var(--font-display);
+    font-stretch: 62%;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums lining-nums;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+  }
+  .board-label {
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+
+  /* Przyciski */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.4rem;
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    text-align: center;
+    transition:
+      background-color 0.15s,
+      color 0.15s,
+      border-color 0.15s,
+      transform 0.15s;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-red {
+    background: var(--color-flag);
+    color: #fff;
+  }
+  .btn-red:hover {
+    background: var(--color-flag-dark);
+  }
+  .btn-ghost-light {
+    border: 2px solid rgb(255 255 255 / 0.85);
+    color: #fff;
+  }
+  .btn-ghost-light:hover {
+    background: #fff;
+    color: var(--color-navy-900);
+  }
+  .btn-ghost-dark {
+    border: 2px solid var(--color-navy-900);
+    color: var(--color-navy-900);
+  }
+  .btn-ghost-dark:hover {
+    background: var(--color-navy-900);
+    color: #fff;
+  }
+  .btn-white {
+    background: #fff;
+    color: var(--color-navy-900);
+  }
+  .btn-white:hover {
+    background: var(--color-navy-900);
+    color: #fff;
+  }
+
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-stretch: 85%;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
+  }
+  .link-arrow:hover {
+    text-decoration-color: var(--color-flag);
+  }
+
+  .prose-ew p + p {
+    margin-top: 1rem;
+  }
+
+  /* Znacznik brakującej informacji */
+  .todo {
+    display: inline;
+    padding: 0.05em 0.35em;
+    background: var(--color-todo-bg);
+    color: var(--color-todo-ink);
+    border: 1px dashed var(--color-todo-line);
+    border-radius: 3px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.9em;
+    font-stretch: 100%;
+    letter-spacing: 0;
+    text-transform: none;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* Medale */
+  .medal-dot {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .medal-gold {
+    background: var(--color-gold);
+  }
+  .medal-silver {
+    background: var(--color-silver);
+  }
+  .medal-bronze {
+    background: var(--color-bronze);
+  }
+
+  /* Placeholder zdjęcia – „tatami” z ukośnych pasów */
+  .ph {
+    background-color: var(--color-gi-200);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0 14px,
+      rgb(11 31 58 / 0.05) 14px 28px
+    );
+    border: 2px dashed var(--color-gi-300);
+  }
+
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}

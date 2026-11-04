@@ -1,0 +1,30 @@
+---
+/** Prosta strona komunikatu: „Dziękujemy” po wysłaniu formularza oraz 404. */
+import Base from '../../layouts/Base.astro';
+import { useT, routes, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+  kind: 'thanks' | 'notFound';
+}
+const { lang, kind } = Astro.props;
+const t = useT(lang);
+const meta = t.meta[kind];
+const copy = kind === 'thanks' ? { title: t.thanks.title, text: t.thanks.text } : t.notFound;
+---
+
+<Base lang={lang} route={kind} title={meta.title} description={meta.description} noindex>
+  <section class="on-dark bg-navy-950 py-24 text-white lg:py-36">
+    <div class="wrap max-w-3xl!">
+      <div class="board p-8 pt-10 sm:p-12 sm:pt-14">
+        <p class="digits text-7xl text-flag-light sm:text-8xl" aria-hidden="true">{kind === 'thanks' ? 'IPPON' : '404'}</p>
+        <h1 class="display mt-6 text-5xl sm:text-6xl">{copy.title}</h1>
+        <p class="mt-5 text-lg leading-relaxed text-white/80">{copy.text}</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href={routes.home[lang]} class="btn btn-red">{t.thanks.back}</a>
+          <a href={routes.partnership[lang]} class="btn btn-ghost-light">{t.thanks.partnership}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

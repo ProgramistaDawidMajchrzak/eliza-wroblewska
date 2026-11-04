@@ -1,0 +1,117 @@
+---
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site, profile, photos } from '../lib/data';
+import { getPhoto } from '../lib/photos';
+import { useT, routes, type Lang, type RouteKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  route: RouteKey;
+  title: string;
+  description: string;
+  noindex?: boolean;
+  personSchema?: boolean;
+}
+
+const { lang, route, title, description, noindex = false, personSchema = false } = Astro.props;
+const t = useT(lang);
+const base = (Astro.site?.href ?? site.url).replace(/\/$/, '');
+const abs = (path: string) => base + path;
+
+const hasAlternates = route !== 'notFound';
+const canonical = abs(routes[route][lang]);
+const ogImage = abs(`/og/og-${lang}.jpg`);
+
+let jsonLd: string | undefined;
+if (personSchema) {
+  const heroPhoto = getPhoto(photos.slots.hero);
+  const image = await getImage({ src: heroPhoto.src, width: 1200, format: 'jpg' });
+  jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${base}/#person`,
+    name: `${profile.firstName} ${profile.lastName}`,
+    givenName: profile.firstName,
+    familyName: profile.lastName,
+    alternateName: profile.nickname,
+    birthDate: profile.birthDate,
+    height: { '@type': 'QuantitativeValue', value: profile.heightCm, unitCode: 'CMT' },
+    nationality: { '@type': 'Country', name: t.meta.nationality },
+    jobTitle: t.meta.jobTitle,
+    knowsAbout: 'Judo',
+    memberOf: { '@type': 'SportsOrganization', name: profile.club, sport: 'Judo' },
+    url: abs(routes.home[lang]),
+    image: abs(image.src),
+    sameAs: [
+      ...profile.profiles.map((p) => p.url),
+      ...site.social.map((s) => s.url).filter(Boolean),
+    ],
+  }).replace(/</g, '\\u003c');
+}
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonical} />
+    {
+      hasAlternates && (
+        <>
+          <link rel="alternate" hreflang="pl" href={abs(routes[route].pl)} />
+          <link rel="alternate" hreflang="en" href={abs(routes[route].en)} />
+          <link rel="alternate" hreflang="x-default" href={abs(routes[route].pl)} />
+        </>
+      )
+    }
+
+    <link rel="preload" href="/fonts/archivo-display.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/archivo-digits.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/archivo-label.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-pl.woff2" as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#06142a" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t.meta.siteName} />
+    <meta property="og:locale" content={t.meta.locale} />
+    <meta property="og:locale:alternate" content={lang === 'pl' ? 'en_GB' : 'pl_PL'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.meta.ogAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+  </head>
+  <body class="min-h-screen">
+    <a
+      href="#main"
+      class="sr-only-focusable fixed top-2 left-2 z-[60] bg-flag px-4 py-3 font-display font-bold tracking-wide text-white uppercase"
+    >
+      {t.common.skip}
+    </a>
+    <Header lang={lang} route={route} />
+    <main id="main" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+    <Footer lang={lang} route={route} />
+  </body>
+</html>

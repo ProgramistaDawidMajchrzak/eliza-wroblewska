@@ -1,0 +1,116 @@
+---
+/**
+ * Formularz kontaktowy. Wysyła zwykły POST na adres z src/data/site.yaml (form.endpoint),
+ * więc działa bez JavaScriptu. Dopóki endpoint jest pusty, przycisk jest nieaktywny
+ * i widać znacznik TODO.
+ */
+import { site } from '../lib/data';
+import { useT, routes, type Lang } from '../i18n';
+import Txt from './Txt.astro';
+
+interface Props {
+  lang: Lang;
+  idPrefix?: string;
+}
+const { lang, idPrefix = 'cf' } = Astro.props;
+const t = useT(lang);
+const f = t.form;
+const form = site.form;
+const endpoint = form.endpoint;
+const base = (Astro.site?.href ?? site.url).replace(/\/$/, '');
+const thanksUrl = base + routes.thanks[lang];
+const id = (name: string) => `${idPrefix}-${name}`;
+
+const input =
+  'mt-2 block w-full border-2 border-gi-300 bg-white px-4 py-3 text-base text-ink placeholder:text-ink-soft/70 transition-colors focus:border-navy-900 focus:outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-flag';
+const label = 'block text-sm font-semibold text-ink';
+---
+
+<form
+  action={endpoint || undefined}
+  method="POST"
+  accept-charset="UTF-8"
+  class="on-light bg-white p-5 text-ink sm:p-8"
+  data-contact-form
+>
+  <input type="hidden" name="_subject" value={f.subject} />
+  <input type="hidden" name="subject" value={f.subject} />
+  <input type="hidden" name="language" value={lang} />
+  {form.redirectField && <input type="hidden" name={form.redirectField} value={thanksUrl} />}
+  {Object.entries(form.hidden).map(([name, value]) => <input type="hidden" name={name} value={value} />)}
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div>
+      <label for={id('name')} class={label}>{f.name} <span aria-hidden="true" class="text-flag">*</span></label>
+      <input id={id('name')} name="name" type="text" required autocomplete="name" class={input} />
+    </div>
+    <div>
+      <label for={id('company')} class={label}>
+        {f.company} <span class="font-normal text-ink-soft">({f.optional})</span>
+      </label>
+      <input id={id('company')} name="company" type="text" autocomplete="organization" class={input} />
+    </div>
+    <div>
+      <label for={id('email')} class={label}>{f.email} <span aria-hidden="true" class="text-flag">*</span></label>
+      <input id={id('email')} name="email" type="email" required autocomplete="email" inputmode="email" class={input} />
+    </div>
+    <div>
+      <label for={id('type')} class={label}>{f.type} <span aria-hidden="true" class="text-flag">*</span></label>
+      <select id={id('type')} name="type" required class:list={[input, 'appearance-none bg-[length:1.25rem] bg-[right_0.9rem_center] bg-no-repeat pr-11']} style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b1f3a' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E&quot;)" data-type-select>
+        <option value="" selected disabled>{f.typePlaceholder}</option>
+        {f.typeOptions.map((o) => <option value={o.value} data-pkg={o.pkg || undefined}>{o.label}</option>)}
+      </select>
+    </div>
+    <div class="sm:col-span-2">
+      <label for={id('message')} class={label}>{f.message} <span aria-hidden="true" class="text-flag">*</span></label>
+      <textarea id={id('message')} name="message" rows="5" required placeholder={f.messagePlaceholder} class:list={[input, 'resize-y']}></textarea>
+    </div>
+  </div>
+
+  <div class="hidden" aria-hidden="true">
+    <label for={id('hp')}>{f.honeypot}</label>
+    <input id={id('hp')} type="text" name={form.honeypotField || '_gotcha'} tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div class="mt-6 flex items-start gap-3">
+    <input
+      id={id('consent')}
+      name="consent"
+      type="checkbox"
+      value="yes"
+      required
+      class="mt-0.5 h-5 w-5 shrink-0 accent-flag"
+    />
+    <label for={id('consent')} class="text-sm leading-relaxed text-ink-soft">
+      {f.consentBefore}{' '}
+      <a href={routes.privacy[lang]} class="font-semibold text-ink underline underline-offset-2 hover:text-flag">{f.consentLink}</a>.
+      <span aria-hidden="true" class="text-flag">*</span>
+    </label>
+  </div>
+
+  {
+    !endpoint && (
+      <p class="mt-6 text-sm">
+        <Txt text={f.todoEndpoint} />
+      </p>
+    )
+  }
+
+  <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-xs text-ink-soft"><span aria-hidden="true" class="text-flag">*</span> {f.required}</p>
+    <button type="submit" class="btn btn-red disabled:cursor-not-allowed disabled:opacity-60" disabled={!endpoint}>
+      {f.submit}
+    </button>
+  </div>
+</form>
+
+<script>
+  // Przyciski „Zapytaj o ten pakiet” ustawiają rodzaj współpracy w formularzu.
+  document.querySelectorAll<HTMLAnchorElement>('[data-package]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const select = document.querySelector<HTMLSelectElement>('[data-type-select]');
+      const option = select?.querySelector<HTMLOptionElement>(`option[data-pkg="${link.dataset.package}"]`);
+      if (select && option) select.value = option.value;
+    });
+  });
+</script>

@@ -1,0 +1,41 @@
+---
+import { faq } from '../../lib/data';
+import { useT, type Lang } from '../../i18n';
+import Kicker from '../Kicker.astro';
+import Txt from '../Txt.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const p = t.partnership;
+---
+
+<section id={t.anchors.faq} class="bg-gi py-20 lg:py-28" aria-labelledby="faq-title">
+  <div class="wrap grid gap-10 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-4">
+      <Kicker num="06" text={p.faqKicker} />
+      <h2 id="faq-title" class="display mt-5 text-5xl sm:text-6xl">{p.faqTitle}</h2>
+    </div>
+    <div class="border-t-2 border-navy-900 lg:col-span-8">
+      {
+        faq.map((item) => (
+          <details class="group border-b border-gi-300">
+            <summary class="flex list-none items-start justify-between gap-6 py-5">
+              <span class="text-lg font-semibold">{item.q[lang]}</span>
+              <span class="mt-0.5 grid h-8 w-8 shrink-0 place-items-center border-2 border-navy-900" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="h-4 w-4 transition-transform group-open:rotate-45" fill="none" stroke="currentColor" stroke-width="3">
+                  <path d="M12 4v16M4 12h16" />
+                </svg>
+              </span>
+            </summary>
+            <p class="max-w-[65ch] pb-6 leading-relaxed text-ink-soft">
+              <Txt text={item.a[lang]} />
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

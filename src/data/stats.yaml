@@ -1,0 +1,23 @@
+# ─────────────────────────────────────────────────────────────
+#  LICZBY W HERO (górna część strony głównej)
+# ─────────────────────────────────────────────────────────────
+
+# Dwie pierwsze liczby. "value" to dokładnie to, co pojawi się dużą czcionką.
+hero:
+  - value: "4×"
+    label:
+      pl: "mistrzyni Polski seniorek"
+      en: "Polish senior champion"
+  - value: "25"
+    label:
+      pl: "medali między­narodowych" # ­ = miejsce, w którym długie słowo może się złamać
+      en: "international medals"
+
+# Ranking IJF – trzecia liczba w hero, pokazywana też w kalendarzu i na /media.
+# Po każdej aktualizacji rankingu zmień też datę stanu (asOf)!
+ranking:
+  position: 41
+  points: 992
+  category: "-78 kg"
+  asOf: "2026-10-22" # RRRR-MM-DD
+  url: "https://www.ijf.org/judoka/18128"

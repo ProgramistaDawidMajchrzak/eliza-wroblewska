@@ -1,0 +1,127 @@
+# ─────────────────────────────────────────────────────────────
+#  ZDJĘCIA I WIDEO
+#
+#  1. Pliki zdjęć leżą w src/assets/photos/ – strona sama zrobi z nich lekkie wersje (AVIF/WebP).
+#  2. W „library” każde zdjęcie ma krótką nazwę (np. portret), plik, opis i autora.
+#  3. Niżej („slots”, „gallery”, „press”) wskazujesz, gdzie które zdjęcie ma się pokazać.
+#
+#  Jak podmienić zdjęcie w hero: wrzuć nowy plik do src/assets/photos/, dodaj go do „library”
+#  i w „slots” → „hero” wpisz jego krótką nazwę.
+#
+#  position:  punkt, który ma zostać w kadrze przy przycinaniu („poziomo pionowo”, np. "40% 30%")
+#  credit:    podpis autora. Fragment „TODO: …” jest na stronie podświetlany.
+#  licenseConfirmed: false → przy zdjęciu na /media widać TODO o potwierdzeniu licencji
+# ─────────────────────────────────────────────────────────────
+
+library:
+  portret:
+    file: "eliza-portret-niebieska-judoga.jpg"
+    alt:
+      pl: "Eliza Wróblewska w niebieskiej judodze z orłem i napisem Polska, skupiona, patrzy w bok"
+      en: "Eliza Wróblewska in a blue judogi with the Polish eagle, focused, looking to the side"
+    credit: "TODO: autor zdjęcia (na oryginale znak wodny w prawym górnym rogu)"
+    position: "36% 30%"
+    licenseConfirmed: false
+
+  ippon:
+    file: "eliza-ippon.jpg"
+    alt:
+      pl: "Eliza w niebieskiej judodze unosi pięść po wygranej walce, sędzia pokazuje ippon, na tablicy wyników napis IPPON"
+      en: "Eliza in a blue judogi raises her fist after winning a bout, the referee signals ippon, the scoreboard reads IPPON"
+    credit: "TODO: autor zdjęcia"
+    position: "34% 55%"
+    licenseConfirmed: false
+
+  gratulacje:
+    file: "eliza-gratulacje-po-walce.jpg"
+    alt:
+      pl: "Eliza w niebieskiej judodze z uśmiechem obejmuje rywalkę w białej judodze po walce"
+      en: "Eliza in a blue judogi smiles and embraces her opponent in a white judogi after the bout"
+    credit: "© IJF"
+    position: "56% 40%"
+    licenseConfirmed: false
+
+  sylwetka:
+    file: "eliza-biala-judoga.jpg"
+    alt:
+      pl: "Eliza w białej judodze z czarnym pasem wychodzi na matę"
+      en: "Eliza in a white judogi and black belt walks onto the mat"
+    credit: "Philippe Raboin-Coulon"
+    position: "50% 28%"
+    licenseConfirmed: false
+
+  rzut-1:
+    file: "eliza-rzut-1.jpg"
+    alt:
+      pl: "Eliza w białej judodze wykonuje rzut na rywalce w niebieskiej judodze"
+      en: "Eliza in a white judogi throws her opponent in a blue judogi"
+    credit: "© IJF"
+    position: "42% 50%"
+    licenseConfirmed: false
+
+  rzut-2:
+    file: "eliza-rzut-2.jpg"
+    alt:
+      pl: "Eliza w białej judodze rzuca rywalkę w niebieskiej judodze, rywalka przelatuje nad jej plecami"
+      en: "Eliza in a white judogi throws her opponent in a blue judogi over her back"
+    credit: "© IJF"
+    position: "48% 45%"
+    licenseConfirmed: false
+
+  poznan-kadr:
+    file: "eliza-poznan-kadr.jpg"
+    alt:
+      pl: "Eliza w białej judodze na tle katedry na Ostrowie Tumskim w Poznaniu"
+      en: "Eliza in a white judogi in front of Poznań Cathedral on Ostrów Tumski"
+    credit: "TODO: autor nagrania"
+    position: "50% 40%"
+    licenseConfirmed: false
+
+# Gdzie które zdjęcie (krótka nazwa z „library”).
+slots:
+  hero: portret # strona główna, góra
+  rise: rzut-2 # sekcja „Na fali”
+  values: gratulacje # sekcja „Historia i wartości”
+  partnership: ippon # strona /wspolpraca, góra
+
+# Krótkie wideo w sekcji „Historia” (plik w public/video/).
+video:
+  file: "/video/eliza-poznan.mp4"
+  poster: poznan-kadr
+  caption:
+    pl: "Poznań, Ostrów Tumski"
+    en: "Poznań, Ostrów Tumski"
+  credit: "TODO: autor nagrania; sprawdzić prawa do ścieżki dźwiękowej"
+
+# Galeria na stronie głównej.
+#   photo: krótka nazwa z „library”, span: wide (szerokie) | tall (wysokie) | normal
+#   placeholder: opis zdjęcia, którego jeszcze brakuje (pojawi się jako TODO)
+#   Na komputerze galeria ma 4 kolumny: „wide” zajmuje 2 pola, „tall” 2 rzędy.
+#   Najładniej wygląda, gdy suma pól jest wielokrotnością 4 (teraz: 12).
+gallery:
+  - photo: ippon
+    span: wide
+  - photo: sylwetka
+    span: tall
+  - photo: rzut-1
+  - photo: gratulacje
+    span: wide
+  - placeholder:
+      pl: "TODO: zdjęcie z treningu w PGE Akademii Judo Poznań (poziome 3:2, min. 2000 px)"
+      en: "TODO: training photo at PGE Akademia Judo Poznań (landscape 3:2, min. 2000 px)"
+  - photo: rzut-2
+    span: wide
+  - placeholder:
+      pl: "TODO: wideo – skrót najlepszych akcji (link do YouTube lub plik MP4)"
+      en: "TODO: video – highlights reel (YouTube link or MP4 file)"
+    span: wide
+
+# Zdjęcia do pobrania na stronie /media.
+press:
+  - photo: portret
+  - photo: sylwetka
+  - photo: ippon
+  - photo: gratulacje
+  - placeholder:
+      pl: "TODO: portret w stroju cywilnym do materiałów prasowych i partnerskich (pionowe 4:5, min. 3000 px)"
+      en: "TODO: portrait in civilian clothes for press and partner materials (portrait 4:5, min. 3000 px)"

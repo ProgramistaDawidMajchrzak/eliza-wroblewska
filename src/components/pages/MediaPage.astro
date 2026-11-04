@@ -1,0 +1,288 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Kicker from '../Kicker.astro';
+import Photo from '../Photo.astro';
+import Txt from '../Txt.astro';
+import { site, profile, stats, results, media, photos } from '../../lib/data';
+import { getPhoto } from '../../lib/photos';
+import { formatDate, formatDateLong } from '../../lib/format';
+import { useT, noOrphans, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const m = t.media;
+const f = m.facts;
+const a = t.anchors;
+
+const national = results.filter((r) => !r.international && typeof r.result === 'string');
+const yearsOf = (medal: string) =>
+  national
+    .filter((r) => r.result === medal)
+    .map((r) => r.date.slice(0, 4))
+    .sort()
+    .join(', ');
+const nationalText = (['gold', 'silver', 'bronze'] as const)
+  .map((medal) => ({ medal, years: yearsOf(medal) }))
+  .filter((x) => x.years)
+  .map((x) => `${t.result[x.medal]}: ${x.years}`)
+  .join(' · ');
+const worlds = results
+  .filter((r) => r.result === 'start' && r.city && /świata|World Championships/.test(r.name[lang]))
+  .sort((x, y) => x.date.localeCompare(y.date))
+  .map((r) => `${r.city![lang]} ${r.date.slice(0, 4)}`)
+  .join(', ');
+const r = stats.ranking;
+const medalsStat = stats.hero.find((h) => /medal/i.test(h.label.en));
+
+const facts: { label: string; value: string; todo?: boolean; href?: string }[] = [
+  { label: f.name, value: `${profile.firstName} ${profile.lastName}` },
+  { label: f.nickname, value: lang === 'pl' ? `„${profile.nickname}”` : `“${profile.nickname}”` },
+  { label: f.born, value: formatDateLong(profile.birthDate, lang) },
+  { label: f.height, value: `${profile.heightCm} cm` },
+  { label: f.club, value: profile.club },
+  { label: f.category, value: `${profile.category} (${f.categorySince} ${profile.categorySince})` },
+  { label: f.previous, value: profile.previousCategories[lang] },
+  {
+    label: f.ranking,
+    value: `${r.position}. · ${r.category} · ${r.points} ${t.common.points} (${t.common.asOf} ${formatDate(r.asOf, lang)})`,
+  },
+  { label: f.nationalTitles, value: nationalText },
+  ...(medalsStat ? [{ label: f.medals, value: medalsStat.value }] : []),
+  ...(worlds ? [{ label: f.worlds, value: worlds }] : []),
+  { label: f.coach, value: profile.coach || f.coachTodo, todo: !profile.coach },
+];
+
+const bios = (['short', 'medium', 'long'] as const).map((key) => ({
+  key,
+  label: m.bioVersions[key],
+  paragraphs: media.bios[key][lang].split(/\n+/).filter(Boolean).map(noOrphans),
+  text: media.bios[key][lang].replace(/\n+/g, '\n\n'),
+}));
+
+const press = photos.press;
+const c = site.contact;
+---
+
+<Base lang={lang} route="media" title={t.meta.media.title} description={t.meta.media.description} personSchema>
+  <section class="on-dark bg-navy-950 pt-16 pb-14 text-white lg:pt-24 lg:pb-20" aria-labelledby="media-title">
+    <div class="wrap grid gap-10 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <p class="kicker text-white/80"><span class="h-1 w-8 bg-flag" aria-hidden="true"></span>{m.kicker}</p>
+        <h1 id="media-title" class="display mt-5 text-6xl sm:text-7xl xl:text-8xl">{m.title}</h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/80">{m.lead}</p>
+        <div class="mt-8">
+          {
+            site.mediaKitPdf ? (
+              <a href={site.mediaKitPdf} class="btn btn-red" download>
+                {m.mediaKit} <span aria-hidden="true">↓</span>
+              </a>
+            ) : (
+              <p class="board inline-block p-4 pt-5">
+                <span class="board-label mr-3 text-white/75">{m.mediaKit}</span>
+                <Txt text={m.mediaKitTodo} />
+              </p>
+            )
+          }
+        </div>
+      </div>
+      <nav class="lg:col-span-4 lg:col-start-9" aria-label={m.toc}>
+        <p class="board-label text-white/70">{m.toc}</p>
+        <ul class="mt-3 divide-y divide-white/10 border-y border-white/10">
+          {
+            [
+              [a.bio, m.bioTitle],
+              [a.facts, m.factsTitle],
+              [a.photos, m.photosTitle],
+              [a.pressContact, m.contactTitle],
+            ].map(([href, label], i) => (
+              <li>
+                <a href={`#${href}`} class="flex items-center gap-4 py-3 hover:text-flag-light">
+                  <span class="digits text-2xl text-flag-light">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="font-semibold">{label}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <section id={a.bio} class="bg-gi py-16 lg:py-24" aria-labelledby="bio-title">
+    <div class="wrap">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <Kicker num="01" text={m.bioTitle} />
+          <h2 id="bio-title" class="display mt-5 text-5xl sm:text-6xl">{m.bioTitle}</h2>
+        </div>
+        <p class="text-sm text-ink-soft">{m.updated} {formatDate(media.updated, lang)}</p>
+      </div>
+      <div class="mt-10 grid gap-5 lg:grid-cols-3 lg:items-start">
+        {
+          bios.map((bio) => (
+            <article class:list={['border-2 border-navy-900 bg-white p-6 sm:p-7', bio.key === 'long' && 'lg:col-span-3']}>
+              <div class="flex items-center justify-between gap-4 border-b border-gi-300 pb-4">
+                <h3 class="board-label text-ink">{bio.label}</h3>
+                <button
+                  type="button"
+                  class="btn btn-ghost-dark min-h-10! px-3! py-1.5! text-xs!"
+                  data-copy={bio.text}
+                  data-copied={m.copied}
+                  hidden
+                >
+                  {m.copy}
+                </button>
+              </div>
+              <div class:list={['prose-ew mt-4 leading-relaxed', bio.key === 'long' && 'lg:columns-2 lg:gap-12 [&>p]:break-inside-avoid']}>
+                {bio.paragraphs.map((p) => <p>{p}</p>)}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id={a.facts} class="bg-white py-16 lg:py-24" aria-labelledby="facts-title">
+    <div class="wrap grid gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <Kicker num="02" text={m.factsTitle} />
+        <h2 id="facts-title" class="display mt-5 text-5xl sm:text-6xl">{m.factsTitle}</h2>
+      </div>
+      <dl class="border-t-2 border-navy-900 lg:col-span-8">
+        {
+          facts.map((fact) => (
+            <div class="grid gap-1 border-b border-gi-300 py-4 sm:grid-cols-[13rem_1fr] sm:gap-6">
+              <dt class="board-label pt-1 text-ink-soft">{fact.label}</dt>
+              <dd class="font-medium">{fact.todo ? <Txt text={fact.value} /> : fact.value}</dd>
+            </div>
+          ))
+        }
+        <div class="grid gap-1 border-b border-gi-300 py-4 sm:grid-cols-[13rem_1fr] sm:gap-6">
+          <dt class="board-label pt-1 text-ink-soft">{f.profiles}</dt>
+          <dd class="font-medium">
+            {
+              profile.profiles.map((p, i) => (
+                <>
+                  {i > 0 && ' · '}
+                  <a href={p.url} class="underline underline-offset-4 hover:text-flag" rel="noopener">
+                    {p.name}
+                  </a>
+                </>
+              ))
+            }
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section id={a.photos} class="bg-gi py-16 lg:py-24" aria-labelledby="photos-title">
+    <div class="wrap">
+      <Kicker num="03" text={m.photosTitle} />
+      <h2 id="photos-title" class="display mt-5 text-5xl sm:text-6xl">{m.photosTitle}</h2>
+      <p class="mt-4 text-ink-soft">{m.photosLead}</p>
+      <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          press.map((item) => {
+            if (!('photo' in item)) {
+              return (
+                <li>
+                  <Photo lang={lang} placeholder={item.placeholder[lang]} ratio="4 / 5" />
+                </li>
+              );
+            }
+            const photo = getPhoto(item.photo);
+            return (
+              <li class="flex flex-col">
+                <div class="aspect-[4/5] overflow-hidden bg-navy-800">
+                  <Picture
+                    src={photo.src}
+                    alt={photo.alt[lang]}
+                    formats={['avif', 'webp']}
+                    widths={[400, 640, 800]}
+                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+                    class="h-full w-full object-cover"
+                    style={`object-position: ${photo.position};`}
+                    pictureAttributes={{ class: 'contents' }}
+                  />
+                </div>
+                <p class="mt-3 text-sm">
+                  {t.common.photoBy} <Txt text={photo.credit} />
+                </p>
+                <p class="mt-1 text-xs text-ink-soft">
+                  {photo.src.width} × {photo.src.height} px
+                </p>
+                {!photo.licenseConfirmed && (
+                  <p class="mt-2 text-xs">
+                    <Txt text={m.licenseTodo} />
+                  </p>
+                )}
+                <a href={photo.src.src} download class="link-arrow mt-3 text-sm text-ink">
+                  {m.download} <span aria-hidden="true">↓</span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id={a.pressContact} class="on-dark bg-navy-950 py-16 text-white lg:py-24" aria-labelledby="press-contact-title">
+    <div class="wrap grid gap-8 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <Kicker num="04" text={m.contactTitle} dark />
+        <h2 id="press-contact-title" class="display mt-5 text-5xl sm:text-6xl">{m.contactTitle}</h2>
+      </div>
+      <div class="board p-6 pt-8 lg:col-span-6 lg:col-start-7">
+        <p class="text-xl font-semibold">{c.pressName || <Txt text={m.contactNameTodo} />}</p>
+        <p class="mt-3">
+          {
+            c.pressEmail ? (
+              <a href={`mailto:${c.pressEmail}`} class="break-all underline underline-offset-4 hover:text-flag-light">
+                {c.pressEmail}
+              </a>
+            ) : (
+              <Txt text={m.contactEmailTodo} />
+            )
+          }
+        </p>
+        <p class="mt-3">
+          {
+            c.pressPhone ? (
+              <a href={`tel:${c.pressPhone.replace(/\s/g, '')}`} class="underline underline-offset-4 hover:text-flag-light">
+                {c.pressPhone}
+              </a>
+            ) : (
+              <Txt text={m.contactPhoneTodo} />
+            )
+          }
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Przyciski „Kopiuj” przy biogramach – pokazujemy je tylko, gdy przeglądarka obsługuje schowek.
+  if (navigator.clipboard) {
+    document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+      button.hidden = false;
+      const label = button.textContent;
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(button.dataset.copy ?? '');
+          button.textContent = button.dataset.copied ?? '✓';
+          setTimeout(() => (button.textContent = label), 2000);
+        } catch {
+          /* brak dostępu do schowka – tekst można zaznaczyć ręcznie */
+        }
+      });
+    });
+  }
+</script>

@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import PartnershipHero from '../partnership/PartnershipHero.astro';
+import Why from '../partnership/Why.astro';
+import Packages from '../partnership/Packages.astro';
+import TaxBenefit from '../partnership/TaxBenefit.astro';
+import Partners from '../partnership/Partners.astro';
+import Faq from '../partnership/Faq.astro';
+import Contact from '../Contact.astro';
+import { useT, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<Base
+  lang={lang}
+  route="partnership"
+  title={t.meta.partnership.title}
+  description={t.meta.partnership.description}
+  personSchema
+>
+  <PartnershipHero lang={lang} />
+  <Why lang={lang} />
+  <Packages lang={lang} />
+  <TaxBenefit lang={lang} />
+  <Partners lang={lang} />
+  <Faq lang={lang} />
+  <Contact lang={lang} num="07" title={t.partnership.contactTitle} />
+</Base>

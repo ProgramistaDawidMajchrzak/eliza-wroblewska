@@ -1,0 +1,46 @@
+---
+import { photos } from '../../lib/data';
+import { useT, type Lang } from '../../i18n';
+import Kicker from '../Kicker.astro';
+import Photo from '../Photo.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const spanClass = {
+  wide: 'col-span-2',
+  tall: 'row-span-2',
+  normal: '',
+} as const;
+const sizesFor = (span: 'wide' | 'tall' | 'normal') =>
+  span === 'wide' ? '(min-width: 1024px) 50vw, 100vw' : '(min-width: 1024px) 25vw, 50vw';
+---
+
+<section id={t.anchors.gallery} class="bg-white py-20 lg:py-28" aria-labelledby="gallery-title">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <Kicker num="05" text={t.gallery.kicker} />
+      <h2 id="gallery-title" class="display mt-5 text-5xl sm:text-6xl xl:text-7xl">{t.gallery.title}</h2>
+      <p class="mt-5 text-ink-soft">{t.gallery.lead}</p>
+    </div>
+
+    <ul
+      class="mt-12 grid auto-rows-[10.5rem] grid-flow-row-dense grid-cols-2 gap-2 sm:auto-rows-[15rem] sm:gap-3 lg:auto-rows-[16.5rem] lg:grid-cols-4"
+    >
+      {
+        photos.gallery.map((item) => (
+          <li class:list={[spanClass[item.span]]}>
+            {'photo' in item ? (
+              <Photo lang={lang} id={item.photo} sizes={sizesFor(item.span)} class="h-full w-full" />
+            ) : (
+              <Photo lang={lang} placeholder={item.placeholder[lang]} class="h-full w-full" />
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

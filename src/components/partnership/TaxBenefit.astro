@@ -1,0 +1,56 @@
+---
+import { tax } from '../../lib/data';
+import { useT, type Lang } from '../../i18n';
+import Kicker from '../Kicker.astro';
+import Txt from '../Txt.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const p = t.partnership;
+---
+
+<section id={t.anchors.tax} class="on-dark bg-navy-950 py-20 text-white lg:py-28" aria-labelledby="tax-title">
+  <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-6">
+      <Kicker num="04" text={p.taxKicker} dark />
+      <h2 id="tax-title" class="display mt-5 text-5xl sm:text-6xl">{tax.title[lang]}</h2>
+      <p class="mt-6 text-lg leading-relaxed text-white/85">{tax.lead[lang]}</p>
+      <p class="mt-6 font-semibold">{p.taxQualifies}</p>
+      <ul class="mt-3 space-y-2 text-white/85">
+        {
+          tax.qualifies[lang].map((q) => (
+            <li class="flex gap-3">
+              <span class="mt-2.5 h-1.5 w-3 shrink-0 bg-flag" aria-hidden="true" />
+              {q}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="lg:col-span-6">
+      <dl class="board board-cells grid-cols-1 pt-1 sm:grid-cols-3">
+        {
+          tax.breakdown.map((b, i) => (
+            <div class:list={['board-cell flex flex-col-reverse justify-end p-6', i === tax.breakdown.length - 1 && 'bg-flag!']}>
+              <dt class="board-label mt-3 text-white/85">{b.label[lang]}</dt>
+              <dd class="digits text-6xl sm:text-5xl xl:text-6xl">{b.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="mt-6 text-sm leading-relaxed text-white/75">{tax.legalBasis[lang]}</p>
+      <p class="mt-3 text-sm leading-relaxed text-white/75">{tax.disclaimer[lang]}</p>
+      {
+        tax.todo && (
+          <p class="mt-4 text-sm">
+            <Txt text={tax.todo[lang]} />
+          </p>
+        )
+      }
+    </div>
+  </div>
+</section>

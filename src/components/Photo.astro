@@ -1,0 +1,98 @@
+---
+/**
+ * Zdjęcie z biblioteki (src/data/photos.yaml) w lekkich formatach AVIF/WebP
+ * albo – gdy zdjęcia brakuje – placeholder w docelowych proporcjach z opisem TODO.
+ */
+import { Picture } from 'astro:assets';
+import { getPhoto } from '../lib/photos';
+import { useT, type Lang } from '../i18n';
+import Txt from './Txt.astro';
+
+interface Props {
+  lang: Lang;
+  id?: string;
+  placeholder?: string;
+  ratio?: string;
+  sizes?: string;
+  widths?: number[];
+  priority?: boolean;
+  credit?: 'overlay' | 'overlay-top' | 'below' | 'none';
+  class?: string;
+  imgClass?: string;
+}
+
+const {
+  lang,
+  id,
+  placeholder,
+  ratio,
+  sizes = '100vw',
+  widths = [480, 768, 1080, 1440, 2048],
+  priority = false,
+  credit = 'overlay',
+  class: className = '',
+  imgClass = '',
+} = Astro.props;
+
+const t = useT(lang);
+const photo = id ? getPhoto(id) : undefined;
+const usableWidths = photo ? widths.filter((w) => w <= photo.src.width) : [];
+if (photo && !usableWidths.includes(photo.src.width) && usableWidths.length < widths.length) {
+  usableWidths.push(photo.src.width);
+}
+const style = ratio ? `aspect-ratio: ${ratio};` : undefined;
+---
+
+{
+  photo ? (
+    <figure class:list={['relative overflow-hidden bg-navy-800', className]} style={style}>
+      <Picture
+        src={photo.src}
+        alt={photo.alt[lang]}
+        formats={['avif', 'webp']}
+        widths={usableWidths}
+        sizes={sizes}
+        priority={priority}
+        class:list={['h-full w-full object-cover', imgClass]}
+        style={`object-position: ${photo.position};`}
+        pictureAttributes={{ class: 'contents' }}
+      />
+      {(credit === 'overlay' || credit === 'overlay-top') && photo.credit && (
+        <figcaption
+          class:list={[
+            'absolute right-0 max-w-full bg-navy-950/85 px-2 py-1 text-[0.6875rem] leading-tight text-white',
+            credit === 'overlay-top' ? 'top-0 lg:top-auto lg:bottom-0' : 'bottom-0',
+          ]}
+        >
+          {t.common.photoBy} <Txt text={photo.credit} />
+        </figcaption>
+      )}
+      {credit === 'below' && photo.credit && (
+        <figcaption class="pt-2 text-xs text-ink-soft">
+          {t.common.photoBy} <Txt text={photo.credit} />
+        </figcaption>
+      )}
+    </figure>
+  ) : (
+    <figure
+      class:list={['ph relative flex flex-col items-center justify-center gap-3 p-5 text-center', className]}
+      style={style}
+    >
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        class="h-8 w-8 text-navy-700"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+      >
+        <path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" />
+        <circle cx="12" cy="13" r="3.5" />
+      </svg>
+      <figcaption class="max-w-[28ch] text-sm leading-snug">
+        <span class="sr-only">{t.common.placeholderPhoto}: </span>
+        <Txt text={placeholder} />
+      </figcaption>
+    </figure>
+  )
+}

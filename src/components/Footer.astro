@@ -1,0 +1,134 @@
+---
+import { site, profile } from '../lib/data';
+import { useT, routes, otherLang, homeAnchor, type Lang, type RouteKey } from '../i18n';
+import Monogram from './Monogram.astro';
+import Txt from './Txt.astro';
+
+interface Props {
+  lang: Lang;
+  route: RouteKey;
+}
+const { lang, route } = Astro.props;
+const t = useT(lang);
+const alt = otherLang(lang);
+const onHome = route === 'home';
+const year = new Date().getFullYear();
+
+const pages = [
+  { href: routes.home[lang], label: t.common.homeLink },
+  { href: routes.partnership[lang], label: t.nav.partnership },
+  { href: routes.media[lang], label: t.nav.media },
+  { href: homeAnchor(lang, t.anchors.contact, onHome), label: t.nav.contact },
+  { href: routes.privacy[lang], label: t.footer.privacy },
+];
+---
+
+<footer class="on-dark bg-navy-950 text-white">
+  <div class="wrap grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <div>
+      <Monogram class="h-10 w-auto text-white" />
+      <p class="display mt-5 text-3xl" style="font-stretch: 72%">Eliza Wróblewska</p>
+      <p class="mt-2 text-sm text-white/75">{t.common.tagline.join(' · ')}</p>
+      <p class="mt-4 text-sm text-white/75">
+        {t.footer.club}:{' '}
+        {
+          site.club.url ? (
+            <a href={site.club.url} class="text-white underline underline-offset-4 hover:text-flag-light" rel="noopener">
+              {site.club.name}
+            </a>
+          ) : (
+            <span class="text-white">{site.club.name}</span>
+          )
+        }
+        {
+          !site.club.url && (
+            <>
+              <br />
+              <mark class="todo mt-1 inline-block">
+                {lang === 'pl' ? 'TODO: link do strony klubu' : 'TODO: club website link'}
+              </mark>
+            </>
+          )
+        }
+      </p>
+    </div>
+
+    <nav aria-label={t.footer.pages}>
+      <h2 class="board-label text-white/60">{t.footer.pages}</h2>
+      <ul class="mt-4 space-y-2.5 text-[0.9375rem]">
+        {
+          pages.map((p) => (
+            <li>
+              <a href={p.href} class="text-white/90 hover:text-white hover:underline hover:underline-offset-4">
+                {p.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={routes[route][alt]} lang={alt} hreflang={alt} class="text-white/90 hover:text-white hover:underline hover:underline-offset-4">
+            {t.common.langName}
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="board-label text-white/60">{t.footer.social}</h2>
+      <ul class="mt-4 space-y-2.5 text-[0.9375rem]">
+        {
+          site.social.map((s) => (
+            <li>
+              {s.url ? (
+                <a href={s.url} class="text-white/90 hover:text-white hover:underline hover:underline-offset-4" rel="noopener me">
+                  {s.name}
+                </a>
+              ) : (
+                <>
+                  <span class="text-white/90">{s.name}</span> <mark class="todo">{t.footer.socialTodo}</mark>
+                </>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+      <h2 class="board-label mt-8 text-white/60">{t.footer.profiles}</h2>
+      <ul class="mt-4 space-y-2.5 text-[0.9375rem]">
+        {
+          profile.profiles.map((p) => (
+            <li>
+              <a href={p.url} class="text-white/90 hover:text-white hover:underline hover:underline-offset-4" rel="noopener">
+                {p.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="board-label text-white/60">{t.footer.contact}</h2>
+      <p class="mt-4 text-[0.9375rem]">
+        {
+          site.contact.email ? (
+            <a href={`mailto:${site.contact.email}`} class="break-all text-white underline underline-offset-4 hover:text-flag-light">
+              {site.contact.email}
+            </a>
+          ) : (
+            <Txt text={t.contact.emailTodo} />
+          )
+        }
+      </p>
+      <a href={route === 'partnership' ? `#${t.anchors.contact}` : routes.partnership[lang]} class="btn btn-red mt-6 w-full sm:w-auto">
+        {t.common.ctaPartner}
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="wrap flex flex-col gap-2 py-6 text-xs text-white/70 sm:flex-row sm:justify-between">
+      <p>© {year} Eliza Wróblewska. {t.footer.rights}</p>
+      <p>{t.footer.photos}</p>
+    </div>
+  </div>
+</footer>

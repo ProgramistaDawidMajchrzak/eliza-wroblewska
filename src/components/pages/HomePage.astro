@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../home/Hero.astro';
+import Rise from '../home/Rise.astro';
+import PartnerBand from '../home/PartnerBand.astro';
+import Story from '../home/Story.astro';
+import Achievements from '../home/Achievements.astro';
+import Events from '../home/Events.astro';
+import Gallery from '../home/Gallery.astro';
+import Contact from '../Contact.astro';
+import { useT, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<Base lang={lang} route="home" title={t.meta.home.title} description={t.meta.home.description} personSchema>
+  <Hero lang={lang} />
+  <Rise lang={lang} />
+  <PartnerBand lang={lang} />
+  <Story lang={lang} />
+  <Achievements lang={lang} />
+  <Events lang={lang} />
+  <Gallery lang={lang} />
+  <Contact lang={lang} num="06" />
+</Base>

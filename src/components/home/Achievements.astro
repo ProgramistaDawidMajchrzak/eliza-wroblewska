@@ -1,0 +1,112 @@
+---
+import { results, profile } from '../../lib/data';
+import { formatCompactDate } from '../../lib/format';
+import { useT, type Lang } from '../../i18n';
+import Kicker from '../Kicker.astro';
+import ResultBadge from '../ResultBadge.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+
+const featured = results.filter((r) => r.featured);
+const years = [...new Set(results.map((r) => r.date.slice(0, 4)))];
+const byYear = years.map((year) => ({ year, items: results.filter((r) => r.date.startsWith(year)) }));
+const big = (r: (typeof results)[number]) =>
+  typeof r.result === 'number' ? t.result.placeShort(r.result) : t.result[r.result];
+---
+
+<section id={t.anchors.results} class="on-dark bg-navy-950 py-20 text-white lg:py-28" aria-labelledby="results-title">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <Kicker num="03" text={t.results.kicker} dark />
+      <h2 id="results-title" class="display mt-5 text-5xl sm:text-6xl xl:text-7xl">{t.results.title}</h2>
+      <p class="mt-6 text-lg leading-relaxed text-white/80">{t.results.lead}</p>
+    </div>
+
+    <ul class="board-cells mt-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        featured.map((r) => (
+          <li class="board-cell relative flex flex-col p-6 sm:p-7 lg:p-8">
+            <span class="digits text-3xl text-white/75">{r.date.slice(0, 4)}</span>
+            <p class="digits mt-8 flex items-center gap-3 text-6xl sm:text-7xl">
+              {typeof r.result === 'string' && r.result !== 'start' && (
+                <span class:list={['medal-dot h-5! w-5!', `medal-${r.result}`]} aria-hidden="true" />
+              )}
+              {big(r)}
+            </p>
+            <h3 class="mt-3 text-lg leading-snug font-semibold">{r.name[lang]}</h3>
+            {r.category && (
+              <p class="mt-1 text-sm text-white/70">
+                {t.result.category} {r.category}
+              </p>
+            )}
+            <span
+              aria-hidden="true"
+              class:list={[
+                'absolute inset-x-0 bottom-0 h-1',
+                r.result === 'gold' && 'bg-gold',
+                r.result === 'silver' && 'bg-silver',
+                r.result === 'bronze' && 'bg-bronze',
+                typeof r.result === 'number' && 'bg-flag',
+              ]}
+            />
+          </li>
+        ))
+      }
+    </ul>
+
+    <details class="group mt-10 border-y border-white/15">
+      <summary class="flex min-h-14 list-none items-center justify-between gap-4 py-4">
+        <span class="display text-2xl sm:text-3xl" style="font-stretch: 75%">{t.results.timeline}</span>
+        <span class="grid h-10 w-10 shrink-0 place-items-center bg-flag text-white" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="h-5 w-5 transition-transform group-open:rotate-45" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 4v16M4 12h16"></path>
+          </svg>
+        </span>
+      </summary>
+      <div class="pb-6">
+        {
+          byYear.map(({ year, items }) => (
+            <div class="grid gap-3 border-t border-white/10 py-6 sm:grid-cols-[8rem_1fr] sm:gap-6">
+              <h3 class="digits text-5xl text-flag-light">{year}</h3>
+              <ul class="divide-y divide-white/10">
+                {items.map((r) => (
+                  <li class="grid gap-1 py-3 sm:grid-cols-[9.5rem_1fr_auto] sm:items-baseline sm:gap-4">
+                    <ResultBadge
+                      result={r.result}
+                      lang={lang}
+                      class="font-display text-sm font-bold tracking-wide uppercase"
+                    />
+                    <span>{r.name[lang]}</span>
+                    <span class="text-sm text-white/70">
+                      {[r.date.length > 4 ? formatCompactDate(r.date, lang) : '', r.category ?? '']
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </details>
+
+    <p class="mt-8 text-sm text-white/75">
+      {t.results.profiles}{' '}
+      {
+        profile.profiles.map((p, i) => (
+          <>
+            {i > 0 && ' · '}
+            <a href={p.url} class="font-semibold text-white underline underline-offset-4 hover:text-flag-light" rel="noopener">
+              {p.name}
+            </a>
+          </>
+        ))
+      }
+    </p>
+  </div>
+</section>

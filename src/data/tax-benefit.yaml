@@ -1,0 +1,43 @@
+# ─────────────────────────────────────────────────────────────
+#  KORZYŚĆ PODATKOWA – ulga sponsoringowa (strona /wspolpraca)
+#  Treść ogólna. Przed publikacją potwierdź z księgowym/doradcą podatkowym.
+# ─────────────────────────────────────────────────────────────
+
+title:
+  pl: "Sponsoring, który pracuje też w rozliczeniu podatkowym"
+  en: "Sponsorship that also works in your tax return"
+
+lead:
+  pl: "Firmy finansujące niezarobkowy klub sportowy, stypendium sportowe lub imprezę sportową niebędącą imprezą masową mogą skorzystać z ulgi sponsoringowej i rozliczyć łącznie 150% wydatku."
+  en: "Under Polish tax law, companies that fund a non-profit sports club, a sports scholarship or a non-mass sports event can use the sponsorship relief and account for 150% of the expense in total."
+
+# Trzy liczby pokazywane jak na tablicy wyników.
+breakdown:
+  - value: "100%"
+    label: { pl: "wydatku w kosztach uzyskania przychodu", en: "of the expense as a deductible cost" }
+  - value: "+50%"
+    label: { pl: "dodatkowego odliczenia od podstawy opodatkowania", en: "additional deduction from the tax base" }
+  - value: "150%"
+    label: { pl: "łącznie", en: "in total" }
+
+qualifies:
+  pl:
+    - "finansowanie niezarobkowego klubu sportowego"
+    - "stypendium sportowe"
+    - "impreza sportowa niebędąca imprezą masową"
+  en:
+    - "funding a non-profit sports club"
+    - "a sports scholarship"
+    - "a sports event that is not a mass event"
+
+legalBasis:
+  pl: "Podstawa prawna: art. 26ha ustawy o PIT i art. 18ee ustawy o CIT."
+  en: "Legal basis: Art. 26ha of the Polish PIT Act and Art. 18ee of the Polish CIT Act."
+
+disclaimer:
+  pl: "To informacja ogólna, a nie porada podatkowa. Formę umowy (np. sponsoring przez klub) i możliwość skorzystania z ulgi trzeba potwierdzić z księgowym lub doradcą podatkowym."
+  en: "This is general information, not tax advice. The form of the agreement (e.g. sponsorship through the club) and eligibility for the relief must be confirmed with your accountant or tax adviser."
+
+todo:
+  pl: "TODO: potwierdzić z klubem i księgowym formę umowy oraz niezarobkowy status klubu"
+  en: "TODO: confirm the form of agreement and the club's non-profit status with the club and an accountant"

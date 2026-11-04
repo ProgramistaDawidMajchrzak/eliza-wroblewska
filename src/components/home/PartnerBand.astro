@@ -1,0 +1,18 @@
+---
+import { useT, routes, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+---
+
+<section class="on-dark bg-flag text-white" aria-label={t.band.cta}>
+  <div class="wrap flex flex-col gap-6 py-10 sm:py-12 lg:flex-row lg:items-center lg:justify-between">
+    <p class="display max-w-3xl text-3xl sm:text-4xl" style="font-stretch: 75%; line-height: 1.02">{t.band.text}</p>
+    <a href={`${routes.partnership[lang]}#${t.anchors.packages}`} class="btn btn-white shrink-0 self-start lg:self-auto">
+      {t.band.cta} <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>

@@ -1,0 +1,171 @@
+# ─────────────────────────────────────────────────────────────
+#  WYNIKI – pełna oś czasu
+#
+#  Jak dodać nowy wynik: skopiuj jeden blok (od „- date” do następnego „- date”),
+#  wklej go NA GÓRZE listy i zmień wartości. Kolejność na stronie ustawia się sama (po dacie).
+#
+#  date:      "RRRR-MM-DD", albo "RRRR-MM" (znany tylko miesiąc), albo "RRRR" (znany tylko rok)
+#  name:      nazwa zawodów po polsku (pl) i angielsku (en)
+#  city:      miasto (opcjonalnie) – pojawia się na tablicy miast na stronie /wspolpraca
+#  result:    gold | silver | bronze | liczba (miejsce, np. 5) | start (sam udział)
+#  category:  kategoria wagowa (opcjonalnie, np. "-78 kg")
+#  international: false  → zawody krajowe (domyślnie: międzynarodowe)
+#  featured:  true → wynik trafia do 6 wyróżnionych kart w sekcji „Osiągnięcia”
+#             (pilnuj, żeby takich wyników było dokładnie 6)
+#  rise:      true → wynik trafia do sekcji „Na fali” (historia w kategorii -78 kg)
+# ─────────────────────────────────────────────────────────────
+
+# ── 2026 ──
+- date: "2026-10-31"
+  name: { pl: "Grand Slam Abu Zabi", en: "Abu Dhabi Grand Slam" }
+  city: { pl: "Abu Zabi", en: "Abu Dhabi" }
+  result: 7
+  rise: true
+
+- date: "2026-10"
+  name: { pl: "Mistrzostwa świata, Baku", en: "World Championships, Baku" }
+  city: { pl: "Baku", en: "Baku" }
+  result: start
+  rise: true
+
+- date: "2026-09-13"
+  name: { pl: "Grand Slam Budapeszt", en: "Budapest Grand Slam" }
+  city: { pl: "Budapeszt", en: "Budapest" }
+  result: 5
+  featured: true
+  rise: true
+
+- date: "2026-05-30"
+  name: { pl: "Mistrzostwa Polski seniorek, Kraków", en: "Polish Senior Championships, Kraków" }
+  result: gold
+  category: "-78 kg"
+  international: false
+  featured: true
+  rise: true
+
+- date: "2026-01-31"
+  name: { pl: "European Open Sofia", en: "Sofia European Open" }
+  city: { pl: "Sofia", en: "Sofia" }
+  result: silver
+  featured: true
+  rise: true
+
+# ── 2025 ──
+- date: "2025"
+  name: { pl: "European Open Sarajewo", en: "Sarajevo European Open" }
+  city: { pl: "Sarajewo", en: "Sarajevo" }
+  result: bronze
+  rise: true
+
+- date: "2025"
+  name: { pl: "Puchar Europy, Skopje", en: "European Cup, Skopje" }
+  city: { pl: "Skopje", en: "Skopje" }
+  result: bronze
+
+- date: "2025"
+  name: { pl: "Mistrzostwa Polski seniorek", en: "Polish Senior Championships" }
+  result: silver
+  international: false
+
+# ── 2024 ──
+- date: "2024"
+  name: { pl: "Grand Slam Astana", en: "Astana Grand Slam" }
+  city: { pl: "Astana", en: "Astana" }
+  result: 5
+  featured: true
+
+- date: "2024"
+  name: { pl: "Grand Prix Linz", en: "Linz Grand Prix" }
+  city: { pl: "Linz", en: "Linz" }
+  result: 5
+
+- date: "2024"
+  name: { pl: "Mistrzostwa świata, Abu Zabi", en: "World Championships, Abu Dhabi" }
+  city: { pl: "Abu Zabi", en: "Abu Dhabi" }
+  result: start
+
+# ── 2023 ──
+- date: "2023"
+  name: { pl: "European Open Warszawa", en: "Warsaw European Open" }
+  city: { pl: "Warszawa", en: "Warsaw" }
+  result: silver
+
+- date: "2023"
+  name: { pl: "International Open Herstal", en: "Herstal International Open" }
+  city: { pl: "Herstal", en: "Herstal" }
+  result: bronze
+
+- date: "2023"
+  name: { pl: "Grand Prix Zagrzeb", en: "Zagreb Grand Prix" }
+  city: { pl: "Zagrzeb", en: "Zagreb" }
+  result: 5
+
+- date: "2023"
+  name: { pl: "Mistrzostwa świata, Doha", en: "World Championships, Doha" }
+  city: { pl: "Doha", en: "Doha" }
+  result: start
+
+- date: "2023"
+  name: { pl: "Mistrzostwa Polski seniorek", en: "Polish Senior Championships" }
+  result: silver
+  international: false
+
+# ── 2022 ──
+- date: "2022"
+  name: { pl: "Puchar Europy, Celje", en: "European Cup, Celje" }
+  city: { pl: "Celje", en: "Celje" }
+  result: bronze
+
+- date: "2022"
+  name: { pl: "Mistrzostwa Polski seniorek", en: "Polish Senior Championships" }
+  result: bronze
+  international: false
+
+# ── 2021 ──
+- date: "2021"
+  name: { pl: "Mistrzostwa Europy U23, Budapeszt", en: "European U23 Championships, Budapest" }
+  city: { pl: "Budapeszt", en: "Budapest" }
+  result: bronze
+  featured: true
+
+- date: "2021"
+  name: { pl: "Wojskowe mistrzostwa świata, Paryż", en: "World Military Championships, Paris" }
+  city: { pl: "Paryż", en: "Paris" }
+  result: silver
+
+- date: "2021"
+  name: { pl: "Mistrzostwa Polski seniorek", en: "Polish Senior Championships" }
+  result: gold
+  category: "-70 kg"
+  international: false
+
+# ── 2020 ──
+- date: "2020"
+  name: { pl: "Mistrzostwa Polski seniorek", en: "Polish Senior Championships" }
+  result: gold
+  category: "-70 kg"
+  international: false
+
+# ── 2019 ──
+- date: "2019"
+  name: { pl: "Światowe Igrzyska Wojskowe, Wuhan", en: "Military World Games, Wuhan" }
+  city: { pl: "Wuhan", en: "Wuhan" }
+  result: bronze
+  featured: true
+
+- date: "2019"
+  name: { pl: "Mistrzostwa świata, Tokio", en: "World Championships, Tokyo" }
+  city: { pl: "Tokio", en: "Tokyo" }
+  result: start
+
+- date: "2019"
+  name: { pl: "Mistrzostwa Polski seniorek", en: "Polish Senior Championships" }
+  result: bronze
+  international: false
+
+# ── 2017 ──
+- date: "2017"
+  name: { pl: "Mistrzostwa Polski seniorek", en: "Polish Senior Championships" }
+  result: gold
+  category: "-70 kg"
+  international: false

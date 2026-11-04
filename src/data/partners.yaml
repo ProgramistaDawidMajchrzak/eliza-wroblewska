@@ -1,0 +1,16 @@
+# ─────────────────────────────────────────────────────────────
+#  OBECNI PARTNERZY (strona /wspolpraca)
+#
+#  Dopóki lista jest pusta, na stronie widać puste miejsca z zaproszeniem.
+#  Jak dodać partnera:
+#    1. wrzuć logo (SVG lub PNG na przezroczystym tle) do src/assets/partners/
+#    2. dopisz blok poniżej, np.:
+#
+#  partners:
+#    - name: "Nazwa firmy"
+#      tier: partner-glowny      # partner-glowny | partner | partner-lokalny
+#      logo: "nazwa-firmy.svg"   # nazwa pliku z src/assets/partners/
+#      url: "https://firma.pl"   # opcjonalnie
+# ─────────────────────────────────────────────────────────────
+
+partners: []

@@ -1,0 +1,15 @@
+---
+/** Etykieta sekcji w stylu tablicy wyników: [01] NA FALI */
+interface Props {
+  num?: string;
+  text: string;
+  dark?: boolean;
+  class?: string;
+}
+const { num, text, dark = false, class: className = '' } = Astro.props;
+---
+
+<p class:list={['kicker', dark ? 'text-white/80' : 'text-ink-soft', className]}>
+  {num && <span class="kicker-num" aria-hidden="true">{num}</span>}
+  <span>{text}</span>
+</p>

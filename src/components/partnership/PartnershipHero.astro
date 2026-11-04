@@ -1,0 +1,45 @@
+---
+import { photos } from '../../lib/data';
+import { useT, type Lang } from '../../i18n';
+import Photo from '../Photo.astro';
+import Scoreboard from '../home/Scoreboard.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const p = t.partnership;
+---
+
+<section class="on-dark relative overflow-hidden bg-navy-950 text-white" aria-labelledby="partnership-title">
+  <div class="relative h-[44svh] min-h-[18rem] lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-[55%]">
+    <Photo
+      lang={lang}
+      id={photos.slots.partnership}
+      priority
+      sizes="(min-width: 1024px) 55vw, 100vw"
+      widths={[480, 828, 1080, 1440, 2048]}
+      credit="overlay-top"
+      class="h-full w-full"
+    />
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,var(--color-navy-950)_0%,rgb(6_20_42/0.45)_35%,transparent_65%)] lg:bg-[linear-gradient(90deg,var(--color-navy-950)_0%,rgb(6_20_42/0.55)_14%,transparent_38%)]"
+    >
+    </div>
+  </div>
+
+  <div class="wrap relative -mt-16 pb-16 lg:mt-0 lg:flex lg:min-h-[calc(92svh-4rem)] lg:items-center lg:py-20">
+    <div class="lg:w-[50%] lg:pr-6">
+      <p class="kicker text-white/80"><span class="h-1 w-8 bg-flag" aria-hidden="true"></span>{p.kicker}</p>
+      <h1 id="partnership-title" class="display mt-5 text-5xl sm:text-6xl xl:text-7xl">{p.title}</h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/80">{p.lead}</p>
+      <div class="mt-8 flex flex-col gap-3 xs:flex-row">
+        <a href={`#${t.anchors.contact}`} class="btn btn-red">{p.ctaTalk} <span aria-hidden="true">→</span></a>
+        <a href={`#${t.anchors.packages}`} class="btn btn-ghost-light">{p.ctaPackages}</a>
+      </div>
+      <Scoreboard lang={lang} class="mt-10 max-w-xl" />
+    </div>
+  </div>
+</section>

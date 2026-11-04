@@ -1,0 +1,54 @@
+---
+/**
+ * Motyw przewodni strony: tablica wyników w stylu zawodów IJF.
+ * Liczby: dwie z src/data/stats.yaml (hero) + ranking IJF z datą stanu.
+ */
+import { stats, profile } from '../../lib/data';
+import { formatDate } from '../../lib/format';
+import { useT, type Lang } from '../../i18n';
+
+interface Props {
+  lang: Lang;
+  class?: string;
+}
+const { lang, class: className = '' } = Astro.props;
+const t = useT(lang);
+const r = stats.ranking;
+---
+
+<div class:list={['board', className]} role="group" aria-label={t.hero.boardLabel}>
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-4 pt-5 pb-3">
+    <div class="flex min-w-0 items-center gap-2.5">
+      <span
+        aria-hidden="true"
+        class="inline-block h-3.5 w-[1.375rem] shrink-0 ring-1 ring-white/40"
+        style="background: linear-gradient(#fff 0 50%, #c8102e 50% 100%)"></span>
+      <span class="board-label truncate text-white">
+        {profile.lastName.toLocaleUpperCase('pl-PL')} <span class="normal-case">{profile.firstName}</span>
+      </span>
+      <span class="board-label text-white/70">{t.hero.country}</span>
+    </div>
+    <span class="board-label shrink-0 text-white/70">{profile.category}</span>
+  </div>
+  <dl class="board-cells grid-cols-3">
+    {
+      stats.hero.map((cell) => (
+        <div class="board-cell flex flex-col-reverse justify-end">
+          <dt class="board-label mt-2.5 text-white/80">{cell.label[lang]}</dt>
+          <dd class="digits text-[2.75rem] xs:text-5xl sm:text-6xl">{cell.value}</dd>
+        </div>
+      ))
+    }
+    <div class="board-cell flex flex-col-reverse justify-end">
+      <dt class="board-label mt-2.5 text-white/80">
+        {t.hero.rankingLabel}
+        <span class="mt-1.5 block font-sans text-[0.6875rem] font-normal tracking-normal text-white/70 normal-case">
+          {r.category} · {r.points} {t.common.points} · {t.common.asOf}&nbsp;{formatDate(r.asOf, lang)}
+        </span>
+      </dt>
+      <dd class="digits text-[2.75rem] xs:text-5xl sm:text-6xl">
+        {r.position}<span class="text-flag-light">.</span>
+      </dd>
+    </div>
+  </dl>
+</div>

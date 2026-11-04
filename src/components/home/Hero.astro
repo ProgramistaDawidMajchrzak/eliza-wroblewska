@@ -1,0 +1,68 @@
+---
+import { site, photos } from '../../lib/data';
+import { useT, routes, type Lang } from '../../i18n';
+import Photo from '../Photo.astro';
+import Scoreboard from './Scoreboard.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const mediaKitHref = site.mediaKitPdf || routes.media[lang];
+---
+
+<section class="on-dark relative overflow-hidden bg-navy-950 text-white" aria-labelledby="hero-title">
+  <div
+    class="relative h-[56svh] max-h-[34rem] min-h-[21rem] lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:max-h-none lg:w-[52%]"
+  >
+    <Photo
+      lang={lang}
+      id={photos.slots.hero}
+      priority
+      sizes="(min-width: 1024px) 52vw, 100vw"
+      widths={[480, 640, 828, 1080, 1440, 2048]}
+      credit="overlay-top"
+      class="h-full w-full"
+    />
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,var(--color-navy-950)_0%,rgb(6_20_42/0.55)_28%,transparent_55%)] lg:bg-[linear-gradient(90deg,var(--color-navy-950)_0%,rgb(6_20_42/0.55)_14%,transparent_38%)]"
+    >
+    </div>
+  </div>
+
+  <div class="wrap relative -mt-24 pb-14 lg:mt-0 lg:flex lg:min-h-[calc(100svh-4rem)] lg:items-center lg:py-16">
+    <div class="lg:w-[56%] lg:pr-6">
+      <h1 id="hero-title" class="display text-[clamp(3.6rem,18.5vw,8.75rem)]" style="font-stretch: 62%; line-height: 0.98">
+        <span class="block">Eliza</span>
+        <span class="block">Wróblewska</span>
+      </h1>
+
+      <p class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 font-display text-sm font-bold tracking-[0.16em] uppercase sm:text-base" style="font-stretch: 85%">
+        {
+          t.common.tagline.map((part, i) => (
+            <>
+              {i > 0 && <span class="h-1.5 w-1.5 bg-flag" aria-hidden="true" />}
+              <span>{part}</span>
+            </>
+          ))
+        }
+      </p>
+
+      <p class="mt-4 max-w-xl text-[1.0625rem] leading-relaxed text-white/80">{t.hero.lead}</p>
+
+      <div class="mt-7 flex flex-col gap-3 xs:flex-row">
+        <a href={routes.partnership[lang]} class="btn btn-red">
+          {t.common.ctaPartner}
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href={mediaKitHref} class="btn btn-ghost-light" download={site.mediaKitPdf ? '' : undefined}>
+          {t.common.ctaMediaKit}
+        </a>
+      </div>
+
+      <Scoreboard lang={lang} class="mt-10 max-w-xl" />
+    </div>
+  </div>
+</section>

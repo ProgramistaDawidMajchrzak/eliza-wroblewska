@@ -1,0 +1,73 @@
+---
+import { results } from '../../lib/data';
+import { useT, type Lang } from '../../i18n';
+import Kicker from '../Kicker.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const p = t.partnership;
+
+// Miasta startów międzynarodowych z results.yaml (od najnowszych, bez powtórzeń).
+const cities = [
+  ...new Set(results.filter((r) => r.international && r.city).map((r) => r.city![lang])),
+];
+---
+
+<section id={t.anchors.why} class="bg-gi py-20 lg:py-28" aria-labelledby="why-judo-title">
+  <div class="wrap">
+    <Kicker num="01" text={p.whyJudoKicker} />
+    <h2 id="why-judo-title" class="display mt-5 max-w-3xl text-5xl sm:text-6xl">{p.whyJudoTitle}</h2>
+    <ul class="mt-12 grid gap-px bg-gi-300 sm:grid-cols-3">
+      {
+        p.whyJudo.map((item, i) => (
+          <li class="bg-gi py-6 sm:px-8 sm:py-8 sm:first:pl-0">
+            <span class="digits text-5xl text-flag" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="display mt-4 text-2xl" style="font-stretch: 80%">{item.title}</h3>
+            <p class="mt-2 leading-relaxed text-ink-soft">{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="bg-white py-20 lg:py-28" aria-labelledby="why-eliza-title">
+  <div class="wrap grid gap-12 lg:grid-cols-12 lg:gap-12">
+    <div class="lg:col-span-6">
+      <Kicker num="02" text={p.whyElizaKicker} />
+      <h2 id="why-eliza-title" class="display mt-5 text-5xl sm:text-6xl">{p.whyElizaTitle}</h2>
+      <ul class="mt-10 space-y-6">
+        {
+          p.whyEliza.map((item) => (
+            <li class="border-t-2 border-navy-900 pt-5">
+              <h3 class="display text-2xl" style="font-stretch: 80%">{item.title}</h3>
+              <p class="mt-2 leading-relaxed text-ink-soft">{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="lg:col-span-5 lg:col-start-8">
+      <div class="board on-dark p-5 pt-7 sm:p-7 sm:pt-9">
+        <h3 class="board-label text-white/75">{p.citiesTitle}</h3>
+        <ul class="mt-5 grid grid-cols-2 gap-1.5 xs:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
+          <li class="flex items-baseline justify-between gap-2 bg-flag px-3 py-2.5">
+            <span class="digits text-xl uppercase">{p.citiesHome}</span>
+            <span class="board-label text-[0.625rem] text-white/90">{p.citiesHomeLabel}</span>
+          </li>
+          {
+            cities.map((city) => (
+              <li class="bg-navy-800 px-3 py-2.5 ring-1 ring-white/10">
+                <span class="digits text-xl uppercase">{city}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,27 @@
+---
+import type { ResultValue } from '../lib/data';
+import { useT, type Lang } from '../i18n';
+
+interface Props {
+  result: ResultValue;
+  lang: Lang;
+  short?: boolean;
+  class?: string;
+}
+const { result, lang, short = false, class: className = '' } = Astro.props;
+const t = useT(lang);
+
+const isMedal = result === 'gold' || result === 'silver' || result === 'bronze';
+const label =
+  typeof result === 'number'
+    ? short
+      ? t.result.placeShort(result)
+      : t.result.place(result)
+    : t.result[result];
+---
+
+<span class:list={['inline-flex items-center gap-2', className]}>
+  {isMedal && <span class:list={['medal-dot', `medal-${result}`]} aria-hidden="true" />}
+  {!isMedal && <span class="medal-dot border-2 border-current opacity-50" aria-hidden="true" />}
+  <span>{label}</span>
+</span>

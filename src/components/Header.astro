@@ -1,0 +1,131 @@
+---
+import { useT, routes, otherLang, homeAnchor, type Lang, type RouteKey } from '../i18n';
+import Monogram from './Monogram.astro';
+
+interface Props {
+  lang: Lang;
+  route: RouteKey;
+}
+const { lang, route } = Astro.props;
+const t = useT(lang);
+const a = t.anchors;
+const onHome = route === 'home';
+const alt = otherLang(lang);
+const altHref = routes[route][alt];
+
+const items = [
+  { href: homeAnchor(lang, a.rise, onHome), label: t.nav.rise, current: false },
+  { href: homeAnchor(lang, a.story, onHome), label: t.nav.story, current: false },
+  { href: homeAnchor(lang, a.results, onHome), label: t.nav.results, current: false },
+  { href: homeAnchor(lang, a.events, onHome), label: t.nav.events, current: false },
+  { href: homeAnchor(lang, a.gallery, onHome), label: t.nav.gallery, current: false },
+  { href: routes.partnership[lang], label: t.nav.partnership, current: route === 'partnership' },
+  { href: routes.media[lang], label: t.nav.media, current: route === 'media' },
+];
+const ctaHref = route === 'partnership' ? `#${a.contact}` : routes.partnership[lang];
+---
+
+<header class="on-dark sticky top-0 z-50 border-b border-white/10 bg-navy-950 text-white">
+  <div class="wrap flex h-16 items-center gap-2 sm:gap-4">
+    <a href={routes.home[lang]} class="mr-auto flex items-center gap-3 py-2" aria-label={`Eliza Wróblewska – ${t.common.homeLink}`}>
+      <Monogram class="h-8 w-auto text-white" />
+      <span class="display hidden text-xl tracking-wide sm:inline" style="font-stretch: 75%">Eliza Wróblewska</span>
+    </a>
+
+    <nav aria-label={t.nav.label} class="hidden xl:block">
+      <ul class="flex items-center gap-1">
+        {
+          items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.current ? 'page' : undefined}
+                class:list={[
+                  'block px-2.5 py-2 text-[0.9375rem] font-medium text-white/85 transition-colors hover:text-white',
+                  item.current && 'text-white underline decoration-flag-light decoration-2 underline-offset-8',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a
+      href={altHref}
+      lang={alt}
+      hreflang={alt}
+      class="hidden h-10 items-center border border-white/30 px-3 font-display text-sm font-bold tracking-widest hover:border-white xl:inline-flex"
+      aria-label={`${t.common.langShort} – ${t.common.langName}`}
+    >
+      {t.common.langShort}
+    </a>
+
+    <a href={ctaHref} class="btn btn-red min-h-10! px-3! py-2! text-[0.8125rem]! sm:px-4! sm:text-sm!">
+      {t.common.ctaPartner}
+    </a>
+
+    <details class="group xl:hidden" data-menu>
+      <summary
+        class="-mr-2 grid h-11 w-11 list-none place-items-center"
+        aria-label={t.common.menuOpen}
+      >
+        <svg viewBox="0 0 24 24" class="h-6 w-6 group-open:hidden" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 6h18M3 12h18M3 18h18"></path>
+        </svg>
+        <svg viewBox="0 0 24 24" class="hidden h-6 w-6 group-open:block" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 5l14 14M19 5L5 19"></path>
+        </svg>
+      </summary>
+      <div class="absolute inset-x-0 top-16 max-h-[calc(100svh-4rem)] overflow-y-auto border-t border-white/10 bg-navy-950 shadow-2xl">
+        <nav aria-label={t.common.menu} class="wrap py-4">
+          <ul class="divide-y divide-white/10">
+            {
+              items.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={item.current ? 'page' : undefined}
+                    class="display flex items-center justify-between py-3.5 text-2xl"
+                    style="font-stretch: 75%"
+                  >
+                    {item.label}
+                    <span aria-hidden="true" class="text-flag-light">→</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <div class="wrap pb-6">
+          <a
+            href={altHref}
+            lang={alt}
+            hreflang={alt}
+            class="inline-flex h-11 items-center gap-2 border border-white/30 px-4 font-display text-sm font-bold tracking-widest"
+          >
+            {t.common.langShort} · {t.common.langName}
+          </a>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>
+
+<script>
+  // Zamknij menu mobilne po kliknięciu w link (np. kotwicę na tej samej stronie) i klawiszem Esc.
+  const menu = document.querySelector<HTMLDetailsElement>('[data-menu]');
+  if (menu) {
+    menu.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) menu.open = false;
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+  }
+</script>

@@ -1,0 +1,83 @@
+---
+import { packages } from '../../lib/data';
+import { useT, type Lang } from '../../i18n';
+import Kicker from '../Kicker.astro';
+import Txt from '../Txt.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const p = t.partnership;
+---
+
+<section id={t.anchors.packages} class="bg-gi py-20 lg:py-28" aria-labelledby="packages-title">
+  <div class="wrap">
+    <div class="max-w-3xl">
+      <Kicker num="03" text={p.packagesKicker} />
+      <h2 id="packages-title" class="display mt-5 text-5xl sm:text-6xl xl:text-7xl">{p.packagesTitle}</h2>
+      <p class="mt-6 text-lg leading-relaxed text-ink-soft">{p.packagesLead}</p>
+    </div>
+
+    <ul class="mt-12 grid gap-5 lg:grid-cols-3 lg:items-stretch">
+      {
+        packages.map((pkg) => (
+          <li
+            class:list={[
+              'relative flex flex-col p-6 pt-8 sm:p-8 sm:pt-10',
+              pkg.highlight ? 'board on-dark lg:-my-4' : 'border-2 border-navy-900 bg-white',
+            ]}
+          >
+            {pkg.highlight && (
+              <p class="board-label absolute top-0 right-6 -translate-y-1/2 bg-flag px-3 py-1.5 text-white">
+                {p.recommended}
+              </p>
+            )}
+            <h3 class="display text-4xl" style="font-stretch: 72%">
+              {pkg.name[lang]}
+            </h3>
+            <p class:list={['board-label mt-2', pkg.highlight ? 'text-white/75' : 'text-ink-soft']}>
+              {pkg.slots[lang]}
+            </p>
+            <p class:list={['mt-4 leading-relaxed', pkg.highlight ? 'text-white/85' : 'text-ink-soft']}>
+              {pkg.tagline[lang]}
+            </p>
+
+            <ul class="mt-6 space-y-3 border-t border-current/15 pt-6">
+              {pkg.benefits.map((b) => (
+                <li class="flex gap-3 leading-snug">
+                  <svg viewBox="0 0 20 20" class="mt-0.5 h-5 w-5 shrink-0 text-flag" aria-hidden="true">
+                    <path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" />
+                  </svg>
+                  <span>
+                    <Txt text={b[lang]} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-auto pt-8">
+              <p class:list={['board-label', pkg.highlight ? 'text-white/75' : 'text-ink-soft']}>{p.priceLabel}</p>
+              <p class="mt-1 text-xl font-semibold">
+                {pkg.price ? pkg.price : <Txt text={p.priceTodo} />}
+              </p>
+              <a
+                href={`#${t.anchors.contact}`}
+                data-package={pkg.id}
+                class:list={['btn mt-6 w-full', pkg.highlight ? 'btn-red' : 'btn-ghost-dark']}
+              >
+                {p.packageCta}
+              </a>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <aside class="mt-14 grid gap-4 border-l-4 border-flag bg-white p-6 sm:grid-cols-[auto_1fr] sm:gap-8 sm:p-8" aria-labelledby="judogi-title">
+      <h3 id="judogi-title" class="display text-2xl sm:max-w-[14ch]" style="font-stretch: 80%">{p.judogiTitle}</h3>
+      <p class="leading-relaxed text-ink-soft">{p.judogiText}</p>
+    </aside>
+  </div>
+</section>

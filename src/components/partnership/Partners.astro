@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import { partners, packages } from '../../lib/data';
+import { getPartnerLogo } from '../../lib/photos';
+import { useT, type Lang } from '../../i18n';
+import Kicker from '../Kicker.astro';
+import Txt from '../Txt.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = useT(lang);
+const p = t.partnership;
+---
+
+<section id={t.anchors.partners} class="bg-white py-20 lg:py-28" aria-labelledby="partners-title">
+  <div class="wrap">
+    <Kicker num="05" text={p.partnersKicker} />
+    <h2 id="partners-title" class="display mt-5 text-5xl sm:text-6xl">{p.partnersTitle}</h2>
+
+    {
+      partners.length > 0 ? (
+        <ul class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {partners.map((partner) => {
+            const logo = (
+              <Image src={getPartnerLogo(partner.logo)} alt={partner.name} class="max-h-16 w-auto object-contain" />
+            );
+            return (
+              <li class="flex flex-col items-center justify-center gap-3 border border-gi-300 p-6 text-center">
+                {partner.url ? <a href={partner.url} rel="noopener">{logo}</a> : logo}
+                <span class="board-label text-ink-soft">{p.tiers[partner.tier]}</span>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <>
+          <ul class="mt-12 grid gap-4 sm:grid-cols-3">
+            {packages.map((pkg) => (
+              <li class="ph flex aspect-[3/2] flex-col items-center justify-center gap-2 p-6 text-center">
+                <span class="board-label text-ink-soft">{pkg.name[lang]}</span>
+                <a href={`#${t.anchors.contact}`} data-package={pkg.id} class="display text-2xl text-ink underline decoration-flag decoration-2 underline-offset-4" style="font-stretch: 80%">
+                  {p.partnersEmpty}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-5 text-sm">
+            <Txt text={p.partnersTodo} />
+          </p>
+        </>
+      )
+    }
+  </div>
+</section>
